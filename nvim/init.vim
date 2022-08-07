@@ -58,7 +58,7 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 " vim-oscyank
-vnoremap y :OSCYank<CR>
+" vnoremap y :OSCYank<CR>
 
 " map
 cmap w!! w !sudo tee > /dev/null %
@@ -157,6 +157,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+Plug 'roxma/vim-tmux-clipboard'
 
 call plug#end()
 
