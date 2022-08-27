@@ -1,4 +1,5 @@
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/hongqi.yu/go/bin
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -55,6 +56,10 @@ zinit snippet OMZL::history.zsh
 zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::gitignore
 
+# For postponing loading `fzf`
+zinit ice lucid wait
+zinit snippet OMZP::fzf
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
@@ -66,14 +71,17 @@ _exists() { (( $+commands[$1])) }
 _exists exa     && alias ls='exa --icons --git'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
-_exists batcat  && alias bat='batcat'
+_exists batcat  && alias cat='batcat'
 _exists free    && alias free='free -h'
 _exists less    && export PAGER=less
 _exists less    && alias more='less'
-_exists kubectl && alias kubesys='kubectl --namespace kube-system'
 _exists ag      && alias grep='ag'
 _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie'
+_exists delta   && alias diff='delta'
+if [[ -n $TERM ]]; then
+    alias pbcopy='xargs tmux set-buffer'
+fi
 
 if _exists nvim; then
     export EDITOR=nvim
@@ -95,4 +103,7 @@ then
   compinit
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/vault/1.11.2/bin/vault vault
+
+eval "$(direnv hook zsh)"

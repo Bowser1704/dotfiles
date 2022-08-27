@@ -24,7 +24,11 @@ set wrap                    " wrap lines
 set showcmd
 set guioptions+=a
 set updatetime=100          "async updatetime
-set nofoldenable
+set foldlevel=20
+
+" for ilatic font
+set t_ZH=^[[3m
+set t_ZR=^[[23
 
 let g:indentLine_enabled = 1
 let g:indentLine_faster = 1
@@ -44,11 +48,28 @@ let g:blamer_delay = 500
 let g:vim_json_conceal=0
 
 " Remove unuse space
-let g:enable_lessmess_onsave = 1
+let g:enable_lessmess_onsave = 0
 
 " vim airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+" OSCYank
+let g:oscyank_term = 'default'
+augroup _oscyank
+  autocmd!
+  autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
+augroup end
+
+" vim-signify
+let g:signify_priority = 5
+
+augroup _general_settings
+  autocmd!
+  autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
+  autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
+  autocmd FileType qf set nobuflisted
+augroup end
 
 " lua require("telescope").setup()
 " Using Lua functions
@@ -83,6 +104,15 @@ nnoremap <silent> <a-o> :FloatermToggle<CR>
 tnoremap <silent> <a-o> <c-\><c-n>:FloatermToggle<CR>
 tnoremap <c-b> <c-\><c-n>
 
+nmap <leader>f :Format<CR>
+nmap <leader>F :FormatWrite<CR>
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * lua vim.lsp.buf.formatting_sync()
+  autocmd BufWritePost * FormatWrite
+augroup END
+
+nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
 " InsertMode: move
 " inoremap <silent> <C-k> <Up>
 " inoremap <silent> <C-j> <Down>
@@ -96,9 +126,9 @@ call plug#begin()
 
 Plug 'flazz/vim-colorschemes'
 Plug 'sainnhe/sonokai'
-Plug 'NLKNguyen/papercolor-theme'
 
 Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'voldikss/vim-floaterm'
 
@@ -110,8 +140,6 @@ Plug 'mg979/vim-visual-multi'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-Plug 'Xuyuanp/scrollbar.nvim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -132,32 +160,37 @@ Plug 'folke/lua-dev.nvim'
 
 Plug 'onsails/lspkind-nvim'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'j-hui/fidget.nvim'
 
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Plug 'APZelos/blamer.nvim'
 
 Plug 'windwp/nvim-autopairs'
 
 Plug 'towolf/vim-helm'
 
-Plug 'lewis6991/gitsigns.nvim'
-
 Plug 'pedrohdz/vim-yaml-folds'
 
+" For git
+Plug 'APZelos/blamer.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'mhinz/vim-signify'
+
+" startup page
 Plug 'mhinz/vim-startify'
 
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 Plug 'tomtom/tcomment_vim'
-Plug 'lukas-reineke/indent-blankline.nvim'
 
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-Plug 'roxma/vim-tmux-clipboard'
+Plug 'ojroques/vim-oscyank'
+
+Plug 'mhartington/formatter.nvim'
+
+Plug 'windwp/nvim-spectre'
 
 call plug#end()
 
@@ -170,6 +203,8 @@ lua require('plugins/gitsigns')
 lua require('plugins/nvim-treesitter')
 lua require('plugins/telescope-ui')
 lua require('plugins/indent-blankline')
+lua require('plugins/formatter')
+lua require('plugins/fidget')
 lua require('autocmd')
 
 

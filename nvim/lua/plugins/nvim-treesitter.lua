@@ -9,8 +9,8 @@ local opt = vim.opt
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 
-configs.setup {
-  ensure_installed = {"go", "python", "vim", "lua"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+configs.setup({
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { "" }, -- List of parsers to ignore installing
   autopairs = {
@@ -26,4 +26,4 @@ configs.setup {
     enable = true,
     enable_autocmd = false,
   },
-}
+})

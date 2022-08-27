@@ -6,18 +6,19 @@ end
 
 nvim_tree.setup {
   open_on_setup = true,
-  update_cwd = true,
-  reload_on_bufenter = true,
+  sync_root_with_cwd = false,
+  respect_buf_cwd = false,
   diagnostics = {
     enable = true
   },
   renderer = {
+    highlight_git = true,
     indent_markers = {
       enable = true,
       icons = {
-        corner = "└ ",
+        corner = "└",
         edge = "│ ",
-        none = "  ",
+        none = " ",
       },
     },
     icons = {
@@ -27,14 +28,13 @@ nvim_tree.setup {
   },
   update_focused_file = {
     enable = true,
-    update_cwd = true,
+    update_root = true,
     ignore_list = {},
   },
   view = {
     width = 25,
   },
   git = {
-    highlight = true,
     ignore = false,
   }
 }
