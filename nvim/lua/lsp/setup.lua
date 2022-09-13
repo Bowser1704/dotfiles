@@ -11,10 +11,14 @@ lsp_installer.setup({
   },
 })
 
+-- require("lsp-inlayhints").setup()
+
 local lspconfig = require("lspconfig")
 
 -- key mappings.
 local custom_attach = function(_, bufnr)
+  -- require("lsp-inlayhints").on_attach(client, bufnr)
+
   local opts = { silent = true, buffer = bufnr }
   vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
@@ -43,6 +47,14 @@ lspconfig.gopls.setup({
   settings = {
     gopls = {
       gofumpt = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
     },
   },
 })

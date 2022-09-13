@@ -107,3 +107,4 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/vault/1.11.2/bin/vault vault
 
 eval "$(direnv hook zsh)"
+export PATH=$PATH:/home/hongqi.yu/.spicetify

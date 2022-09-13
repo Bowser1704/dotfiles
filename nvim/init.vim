@@ -77,6 +77,7 @@ nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+" nnoremap <leader>e <cmd>Telescope file_browser<cr>
 
 " vim-oscyank
 " vnoremap y :OSCYank<CR>
@@ -142,7 +143,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 
 " lsp config
 Plug 'neovim/nvim-lspconfig'
@@ -182,7 +182,9 @@ Plug 'mhinz/vim-signify'
 " startup page
 Plug 'mhinz/vim-startify'
 
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 Plug 'tomtom/tcomment_vim'
 
@@ -191,6 +193,11 @@ Plug 'ojroques/vim-oscyank'
 Plug 'mhartington/formatter.nvim'
 
 Plug 'windwp/nvim-spectre'
+
+Plug 'airblade/vim-rooter'
+Plug 'buoto/gotests-vim'
+
+Plug 'lvimuser/lsp-inlayhints.nvim'
 
 call plug#end()
 
@@ -201,12 +208,10 @@ lua require('plugins/nvim-tree')
 lua require('plugins/autopairs')
 lua require('plugins/gitsigns')
 lua require('plugins/nvim-treesitter')
-lua require('plugins/telescope-ui')
+lua require('plugins/telescope')
 lua require('plugins/indent-blankline')
 lua require('plugins/formatter')
 lua require('plugins/fidget')
-lua require('autocmd')
-
 
 " Important!!
 if has('termguicolors')
