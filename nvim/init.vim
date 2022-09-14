@@ -21,6 +21,8 @@ set clipboard+=unnamedplus  " copy/paste with middle-click
 set ai                      " auto indent
 set si                      " smart indent
 set wrap                    " wrap lines
+set cursorline
+set cursorlineopt=number
 set showcmd
 set guioptions+=a
 set updatetime=100          "async updatetime
@@ -199,6 +201,9 @@ Plug 'buoto/gotests-vim'
 
 Plug 'lvimuser/lsp-inlayhints.nvim'
 
+Plug 'simrat39/rust-tools.nvim'
+Plug 'mfussenegger/nvim-dap'
+
 call plug#end()
 
 lua require('lsp/setup')
@@ -227,6 +232,7 @@ let g:sonokai_disable_terminal_colors = 1
 colorscheme sonokai
 let g:airline_theme = 'sonokai'
 
+autocmd ColorScheme * highlight CursorLineNr cterm=bold term=NONE gui=NONE
 " search for visually selected text
 " copy from https://vim.fandom.com/wiki/Search_for_visually_selected_text
 " Search for selected text, forwards or backwards.
