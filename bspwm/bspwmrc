@@ -27,4 +27,6 @@ done
 # fcitx
 fcitx5 -d
 
+/usr/bin/xsettingsd
+
 alacritty
