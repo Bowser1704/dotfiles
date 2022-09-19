@@ -13,3 +13,4 @@
     ~/.config/bspwm: bspwm
     ~/.config/sxhkd: sxhkd
     ~/.config/rofi: rofi
+    ~/.config/polybar: polybar

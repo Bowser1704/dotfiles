@@ -1,13 +1,13 @@
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/hongqi.yu/go/bin
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 # Created by newuser for 5.8
 
@@ -91,20 +91,16 @@ if _exists nvim; then
     alias vi='nvim'
 fi
 
+alias ll='ls -l'
+
 unfunction _exists
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# brew comp
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
+fpath+=("/usr/share/zsh/site-functions/")
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/vault/1.11.2/bin/vault vault
 
 eval "$(direnv hook zsh)"
-export PATH=$PATH:/home/hongqi.yu/.spicetify

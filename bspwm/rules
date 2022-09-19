@@ -16,7 +16,7 @@ for i in ${browsers[@]}; do
 done
 
 # 3 > Spotify
-declare -a player=(Spotify spotify)
+declare -a player=(Spotify spotify weixin)
 for i in ${player[@]}; do
    bspc rule -a $i desktop='^3' follow=on focus=on;
 done
