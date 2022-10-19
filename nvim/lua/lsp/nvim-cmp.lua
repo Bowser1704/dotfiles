@@ -19,12 +19,12 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
   }, {
+    { name = "vsnip" },
+  }, {
     { name = "buffer", keyword_length = 5 },
     { name = "path" },
     { name = "tmux", keyword_length = 5 },
     { name = "calc" },
-  }, {
-    { name = "vsnip" },
   }),
   -- keybindings
   mapping = {

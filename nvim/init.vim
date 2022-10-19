@@ -111,8 +111,8 @@ nmap <leader>f :Format<CR>
 nmap <leader>F :FormatWrite<CR>
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * lua vim.lsp.buf.formatting_sync()
-  autocmd BufWritePost * FormatWrite
+  autocmd BufWritePost * lua vim.lsp.buf.formatting()
+  autocmd BufWritePost * FormatWrite;/e
 augroup END
 
 nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
@@ -169,7 +169,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-
 Plug 'windwp/nvim-autopairs'
 
 Plug 'towolf/vim-helm'
@@ -203,6 +202,11 @@ Plug 'lvimuser/lsp-inlayhints.nvim'
 
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
+
+Plug 'rafamadriz/friendly-snippets'
+
 
 call plug#end()
 
