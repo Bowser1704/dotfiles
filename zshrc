@@ -7,6 +7,8 @@ fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME.tiup/bin
+export PATH=$PATH:$HOME.spicetify
 export PATH=$PATH:$HOME/go/bin
 
 # Created by newuser for 5.8
@@ -104,3 +106,4 @@ fpath+=("/usr/share/zsh/site-functions/")
 autoload -U +X bashcompinit && bashcompinit
 
 eval "$(direnv hook zsh)"
+source <(istioctl completion zsh); compdef _istioctl istioctl
