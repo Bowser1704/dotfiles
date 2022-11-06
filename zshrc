@@ -7,8 +7,9 @@ fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME.tiup/bin
-export PATH=$PATH:$HOME.spicetify
+export PATH=$PATH:$HOME/.tiup/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.spicetify
 export PATH=$PATH:$HOME/go/bin
 
 # Created by newuser for 5.8
@@ -93,17 +94,21 @@ if _exists nvim; then
     alias vi='nvim'
 fi
 
-alias ll='ls -l'
+_exists istioctl && source <(istioctl completion zsh); compdef _istioctl istioctl
+_exists argocd && source <(argocd completion zsh); compdef _argocd argocd
+_exists kubectl && source <(kubectl completion zsh); compdef _kubectl kubectl
 
+alias ll='ls -l'
 unfunction _exists
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fpath+=("/usr/share/zsh/site-functions/")
 
 autoload -U +X bashcompinit && bashcompinit
 
 eval "$(direnv hook zsh)"
-source <(istioctl completion zsh); compdef _istioctl istioctl

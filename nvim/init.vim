@@ -111,8 +111,8 @@ nmap <leader>f :Format<CR>
 nmap <leader>F :FormatWrite<CR>
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * lua vim.lsp.buf.formatting()
-  autocmd BufWritePost * FormatWrite;/e
+  autocmd BufWritePost * silent! lua vim.lsp.buf.format({async=true})
+  autocmd BufWritePost * FormatWrite
 augroup END
 
 nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
