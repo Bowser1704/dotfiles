@@ -15,11 +15,10 @@ set expandtab               " converts tabs to white space
 set smarttab
 set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
+set smartindent             " smart indent
 set mouse=v                 " middle-click paste with mouse
 set cc=160                  " set an 120 column border for good coding style
 set clipboard+=unnamedplus  " copy/paste with middle-click
-set ai                      " auto indent
-set si                      " smart indent
 set wrap                    " wrap lines
 set cursorline
 set cursorlineopt=number
