@@ -12,6 +12,8 @@ export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.spicetify
 
+autoload -U +X compinit && compinit
+
 # Created by newuser for 5.8
 
 ### Added by Zinit's installer
