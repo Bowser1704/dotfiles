@@ -67,6 +67,9 @@ zinit snippet OMZP::fzf
 
 alias ll='ls -l'
 
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 _exists() { (( $+commands[$1])) }
 
 _exists exa     && alias ls='exa --icons --git'
@@ -103,11 +106,6 @@ if _exists pyenv; then
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
-fi
-
-if _exists brew; then
-    test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-    test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 _exists istioctl && source <(istioctl completion zsh); compdef _istioctl istioctl
