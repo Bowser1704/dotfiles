@@ -112,5 +112,6 @@ _exists istioctl && source <(istioctl completion zsh); compdef _istioctl istioct
 _exists argocd && source <(argocd completion zsh); compdef _argocd argocd
 _exists kubectl && source <(kubectl completion zsh); compdef _kubectl kubectl
 _exists direnv && eval "$(direnv hook zsh)"
+_exists delta && compdef _gnu_generic delta
 
 unfunction _exists
