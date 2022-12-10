@@ -16,7 +16,7 @@ for i in ${browsers[@]}; do
 done
 
 # 3 > Spotify
-declare -a player=(Spotify spotify weixin)
+declare -a player=(Spotify spotify)
 for i in ${player[@]}; do
    bspc rule -a $i desktop='^3' follow=on focus=on;
 done
@@ -32,3 +32,8 @@ for i in ${files[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on;
 done
 
+# 8 > weixin
+declare -a video=(weixin)
+for i in ${video[@]}; do
+   bspc rule -a $i desktop='^4' follow=on focus=on;
+done
