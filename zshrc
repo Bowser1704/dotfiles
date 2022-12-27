@@ -83,6 +83,7 @@ _exists ag      && alias grep='ag'
 _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie'
 _exists delta   && alias diff='delta'
+_exists difft   && alias diff='difft'
 if [[ -n $TERM ]]; then
     alias pbcopy='xargs tmux set-buffer'
 fi
@@ -115,3 +116,5 @@ _exists direnv && eval "$(direnv hook zsh)"
 _exists delta && compdef _gnu_generic delta
 
 unfunction _exists
+
+autoload -U +X bashcompinit && bashcompinit
