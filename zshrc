@@ -13,6 +13,7 @@ export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.spicetify
 
 autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 
 # Created by newuser for 5.8
 
@@ -46,20 +47,23 @@ zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# zsh completion
+zinit ice blockf; zinit light zsh-users/zsh-completions
+
 # omz plugin
 zinit light-mode for \
     zdharma-continuum/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
-    zsh-users/zsh-completions \
     hlissner/zsh-autopair \
     superbrothers/zsh-kubectl-prompt
 
-zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit snippet OMZL::clipboard.zsh
 zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::history.zsh
 zinit snippet OMZP::colored-man-pages
+zinit snippet OMZP::git
 zinit snippet OMZP::gitignore
+zinit snippet OMZP::cp
 
 # For postponing loading `fzf`
 zinit ice lucid wait
@@ -81,7 +85,7 @@ _exists less    && export PAGER=less
 _exists less    && alias more='less'
 _exists ag      && alias grep='ag'
 _exists rg      && alias grep='rg'
-_exists curlie  && alias curl='curlie'
+_exists curlie  && alias curl='curlie' && compdef _curl curlie
 _exists delta   && alias diff='delta'
 _exists difft   && alias diff='difft'
 if [[ -n $TERM ]]; then
@@ -116,5 +120,3 @@ _exists direnv && eval "$(direnv hook zsh)"
 _exists delta && compdef _gnu_generic delta
 
 unfunction _exists
-
-autoload -U +X bashcompinit && bashcompinit
