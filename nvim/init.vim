@@ -207,6 +207,9 @@ Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'rafamadriz/friendly-snippets'
 
+Plug 'https://gitlab.com/yorickpeterse/nvim-pqf.git'
+Plug 'akinsho/git-conflict.nvim'
+
 
 call plug#end()
 
@@ -221,6 +224,7 @@ lua require('plugins/telescope')
 lua require('plugins/indent-blankline')
 lua require('plugins/formatter')
 lua require('plugins/fidget')
+lua require('plugins/git-conflict')
 
 " Important!!
 if has('termguicolors')
