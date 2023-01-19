@@ -78,7 +78,7 @@ augroup end
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>hh <cmd>lua require('telescope.builtin').help_tags()<cr>
 " nnoremap <leader>e <cmd>Telescope file_browser<cr>
 
 " vim-oscyank
@@ -109,21 +109,14 @@ tnoremap <c-b> <c-\><c-n>
 
 nmap <leader>f :Format<CR>
 nmap <leader>F :FormatWrite<CR>
+" async format may cause file be formated after save.
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost * silent! lua vim.lsp.buf.format({async=true})
+  autocmd BufWritePost * silent! lua vim.lsp.buf.format({async=false})
   autocmd BufWritePost * FormatWrite
 augroup END
 
 nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
-" InsertMode: move
-" inoremap <silent> <C-k> <Up>
-" inoremap <silent> <C-j> <Down>
-" inoremap <silent> <C-h> <Left>
-" inoremap <silent> <C-l> <Right>
-" inoremap <silent> <C-b> <Home>
-" inoremap <silent> <C-e> <End>
-
 
 call plug#begin()
 
@@ -149,6 +142,9 @@ Plug 'nvim-lua/plenary.nvim'
 " lsp config
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
+
+Plug 'rafamadriz/friendly-snippets'
+
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -204,8 +200,6 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
 Plug 'rcarriga/nvim-dap-ui'
-
-Plug 'rafamadriz/friendly-snippets'
 
 Plug 'https://gitlab.com/yorickpeterse/nvim-pqf.git'
 Plug 'akinsho/git-conflict.nvim'

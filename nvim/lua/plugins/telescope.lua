@@ -7,6 +7,9 @@ require("telescope").setup({
     path_display = {
       "smart",
     },
+    layout_config = {
+      preview_width = 90,
+    },
     dynamic_preview_title = true,
     file_sorter = require("telescope.sorters").get_fuzzy_file,
     file_ignore_patterns = {},
@@ -17,10 +20,6 @@ require("telescope").setup({
   pickers = {
     layout_config = {
       winblend = 0,
-      width = 0.90,
-      preview_cutoff = 120,
-      results_height = 1,
-      results_width = 0.8,
       layout_strategy = "vertical",
     },
   },

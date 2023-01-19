@@ -29,6 +29,7 @@ local set_lsp_keymaps = function(_, bufnr)
     ["<leader>rn"] = vim.lsp.buf.rename,
     ["<leader>ca"] = vim.lsp.buf.code_action,
     ["<space>f"] = vim.lsp.buf.formatting,
+    ["<leader>cl"] = vim.lsp.codelens.run(),
   }
 
   for lhs, rhs in pairs(mappings) do
@@ -146,6 +147,24 @@ lspconfig.sumneko_lua.setup({
 -- pyright
 lspconfig.pyright.setup({
   on_attach = on_attach,
+  settings = {
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    --root_dir = function(startpath)
+    --       return M.search_ancestors(startpath, matcher)
+    --  end,
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "workspace",
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
+    single_file_support = true,
+    pythonPath = "python3",
+  },
 })
 
 -- jsonls
