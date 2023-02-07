@@ -27,6 +27,7 @@ set guioptions+=a
 set updatetime=100          "async updatetime
 set foldlevel=20
 set noswapfile
+set conceallevel=0
 
 " for ilatic font
 set t_ZH=^[[3m

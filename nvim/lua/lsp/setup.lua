@@ -28,7 +28,7 @@ local set_lsp_keymaps = function(_, bufnr)
     Nd = vim.diagnostic.goto_prev,
     ["<leader>rn"] = vim.lsp.buf.rename,
     ["<leader>ca"] = vim.lsp.buf.code_action,
-    ["<space>f"] = vim.lsp.buf.formatting,
+    ["<space>f"] = vim.lsp.buf.format({ async = false }),
     ["<leader>cl"] = vim.lsp.codelens.run(),
   }
 
@@ -46,7 +46,7 @@ local function set_lsp_autocmd(client, bufnr)
       desc = "[lsp] auto format",
       callback = function()
         if not vim.g.lsp_disable_auto_format then
-          vim.lsp.buf.formatting_sync({}, 5)
+          vim.lsp.buf.format({ async = false })
         end
       end,
     })
@@ -146,7 +146,10 @@ lspconfig.sumneko_lua.setup({
 
 -- pyright
 lspconfig.pyright.setup({
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    client.server_capabilities.hover = false
+    on_attach(client, bufnr)
+  end,
   settings = {
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
@@ -165,6 +168,10 @@ lspconfig.pyright.setup({
     single_file_support = true,
     pythonPath = "python3",
   },
+})
+
+lspconfig.jedi_language_server.setup({
+  on_attach = on_attach,
 })
 
 -- jsonls
