@@ -14,3 +14,4 @@
     ~/.config/sxhkd: sxhkd
     ~/.config/rofi: rofi
     ~/.config/polybar: polybar
+    ~/.config/fontconfig: fontconfig
