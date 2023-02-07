@@ -1,15 +1,14 @@
 -- Global options
-local status_ok, nvim_tree = pcall(require, 'nvim-tree')
+local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
   return
 end
 
-nvim_tree.setup {
-  open_on_setup = true,
+nvim_tree.setup({
   sync_root_with_cwd = false,
   respect_buf_cwd = false,
   diagnostics = {
-    enable = true
+    enable = true,
   },
   renderer = {
     highlight_git = true,
@@ -36,5 +35,5 @@ nvim_tree.setup {
   },
   git = {
     ignore = false,
-  }
-}
+  },
+})
