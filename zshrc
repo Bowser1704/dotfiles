@@ -69,14 +69,12 @@ zinit snippet OMZP::cp
 zinit ice lucid wait
 zinit snippet OMZP::fzf
 
-alias ll='ls -l'
-
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 _exists() { (( $+commands[$1])) }
 
-_exists exa     && alias ls='exa --icons --git'
+_exists exa     && alias ls='exa --icons --git' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
 _exists batcat  && alias cat='batcat'

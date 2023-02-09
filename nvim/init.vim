@@ -218,6 +218,7 @@ lua require('plugins/telescope')
 lua require('plugins/formatter')
 lua require('plugins/fidget')
 lua require('plugins/git-conflict')
+lua require('plugins/plugins')
 
 " Important!!
 if has('termguicolors')

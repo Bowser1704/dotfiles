@@ -8,7 +8,9 @@ require("telescope").setup({
       "smart",
     },
     layout_config = {
-      preview_width = 90,
+      horizontal = {
+        preview_width = 90,
+      },
     },
     dynamic_preview_title = true,
     file_sorter = require("telescope.sorters").get_fuzzy_file,
