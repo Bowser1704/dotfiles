@@ -1,4 +1,4 @@
-# Bowser's dotfiles
+# dotfiles
 
 ## Usage
 
@@ -9,3 +9,20 @@ $ git clone git@github.com:Bowser1704/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
 $ ./install
 ```
+
+## Tools
+
+- Neovim
+- alacritty
+- tmux
+- rofi
+- bspwm
+
+## Neovim
+
+### Plugins
+
+- nvim-lsp
+- nvim-dap
+- nvim-cmp
+- nvim-telescope
