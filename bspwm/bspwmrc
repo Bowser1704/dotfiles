@@ -32,6 +32,9 @@ fcitx5 -d
 
 /usr/bin/xsettingsd &
 
+# auto lock
+./scripts/xidlehook.sh &
+
 feh --bg-scale /usr/share/backgrounds/archlinux/archbtw.png
 
 alacritty
