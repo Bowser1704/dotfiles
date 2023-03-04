@@ -7,7 +7,7 @@ export PATH="${PATH}:${DIR}/bin"
 ## Window rules
 source "${DIR}/rules"
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d TERM BROWSER MUSIC IV V VI VII VIII IX X
 
 bspc config border_width 2
 bspc config top_padding 60
@@ -30,6 +30,8 @@ nm-applet &
 # fcitx
 fcitx5 -d
 
-/usr/bin/xsettingsd
+/usr/bin/xsettingsd &
+
+feh --bg-scale /usr/share/backgrounds/archlinux/archbtw.png
 
 alacritty

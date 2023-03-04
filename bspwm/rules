@@ -21,15 +21,14 @@ for i in ${player[@]}; do
    bspc rule -a $i desktop='^3' follow=on focus=on;
 done
 
-# 4 > vlc
-declare -a video=(vlc)
-for i in ${video[@]}; do
-   bspc rule -a $i desktop='^4' follow=on focus=on;
-done
-
-declare -a files=(Transmission-remote-gtk transmission)
+declare -a files=(Transmission-remote-gtk transmission qbitorrent)
 for i in ${files[@]}; do
    bspc rule -a $i desktop='^5' follow=on focus=on;
+done
+
+declare -a video=(mpv)
+for i in ${video[@]}; do
+   bspc rule -a $i desktop='^6' follow=on focus=on;
 done
 
 # 8 > weixin
