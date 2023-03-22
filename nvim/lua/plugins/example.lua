@@ -17,8 +17,6 @@ return {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "gruvbox",
-      mapleader = ",",
-      maplocalleader = ",",
     },
   },
 

@@ -37,12 +37,23 @@ return {
         debug_mode = false,
       })
 
-      require("utils").on_lsp_attach(function(client, bufnr)
-        if client.name == "rust_analyzer" then
-          return
-        end
-        inlayhints.on_attach(client, bufnr, false)
-      end, { desc = "setup inlay hints" })
+      vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = "LspAttach_inlayhints",
+        callback = function(args)
+          if not (args.data and args.data.client_id) then
+            return
+          end
+
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+          if client.name == "rust_analyzer" then
+            return
+          end
+          inlayhints.on_attach(client, bufnr, false)
+        end,
+      })
     end,
   },
 }
