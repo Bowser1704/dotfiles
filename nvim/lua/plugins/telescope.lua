@@ -2,6 +2,27 @@ return {
   -- add extra telescope keymaps
   {
     "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {
+        layout_strategy = "horizontal",
+        wrap_results = true,
+        initial_mode = "insert",
+        path_display = {
+          "smart",
+        },
+        layout_config = {
+          horizontal = {
+            preview_width = 90,
+          },
+        },
+        dynamic_preview_title = true,
+        file_sorter = require("telescope.sorters").get_fuzzy_file,
+        file_ignore_patterns = {},
+        generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+        shorten_path = true,
+        file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+      },
+    },
     keys = {
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },

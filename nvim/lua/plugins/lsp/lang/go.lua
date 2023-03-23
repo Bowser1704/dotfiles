@@ -19,6 +19,7 @@ return {
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
+    ft = { "go", "gomod", "gotmpl", "helm" },
     opts = {
       -- make sure mason installs the server
       servers = {

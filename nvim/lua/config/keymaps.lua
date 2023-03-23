@@ -17,7 +17,7 @@ end
 
 -- quit
 map("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
-map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit current window" })
+map("n", "<leader>c", "<cmd>q<cr>", { desc = "Quit current window" })
 
 -- Move to buffer use <ctrl> jk keys
 map("n", "<C-j>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Go to left buffer" })
