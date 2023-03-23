@@ -23,6 +23,8 @@ return {
         "typescript",
         "vim",
         "yaml",
+        "proto",
+        "terraform",
       },
       incremental_selection = {
         enable = true,

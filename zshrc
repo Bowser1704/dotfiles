@@ -119,6 +119,7 @@ _exists argocd && argocd completion zsh > ~/.local/completions/_argocd
 _exists kubectl && kubectl completion zsh > ~/.local/completions/_kubectl
 _exists delta && compdef _gnu_generic delta
 _exists vault && complete -o nospace -C $(which vault) vault
+_exists terraform && complete -o nospace -C $(which terraform) terraform
 
 _exists direnv && eval "$(direnv hook zsh)"
 
