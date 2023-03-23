@@ -11,6 +11,7 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.spicetify
+export PATH=$PATH:$HOME/.krew/bin
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
@@ -49,6 +50,7 @@ zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
 # zsh completion
 zinit ice blockf; zinit light zsh-users/zsh-completions
+zstyle ':completion:*:*:make:*' tag-order 'targets'
 
 # omz plugin
 zinit light-mode for \
@@ -104,17 +106,21 @@ if _exists nvm; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 if _exists pyenv; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
 
-_exists istioctl && source <(istioctl completion zsh); compdef _istioctl istioctl
-_exists argocd && source <(argocd completion zsh); compdef _argocd argocd
-_exists kubectl && source <(kubectl completion zsh); compdef _kubectl kubectl
-_exists direnv && eval "$(direnv hook zsh)"
+_exists istioctl && istioctl completion zsh > ~/.local/completions/_istioctl
+_exists argocd && argocd completion zsh > ~/.local/completions/_argocd
+_exists kubectl && kubectl completion zsh > ~/.local/completions/_kubectl
 _exists delta && compdef _gnu_generic delta
+_exists vault && complete -o nospace -C $(which vault) vault
+
+_exists direnv && eval "$(direnv hook zsh)"
 
 unfunction _exists
+
+zinit creinstall ~/.local/completions
