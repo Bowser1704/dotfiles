@@ -13,3 +13,14 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.bo.filetype = "helm"
   end,
 })
+
+local function copy()
+  if vim.v.event.operator == "y" and vim.v.event.regname == "+" then
+    require("osc52").copy_register("+")
+  end
+end
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = augroup("osc52"),
+  callback = copy,
+})

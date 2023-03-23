@@ -19,17 +19,13 @@ return {
   },
   -- system clipboard
   {
-    "EtiamNullam/deferred-clipboard.nvim",
-    event = {
-      "FocusGained",
-      "FocusLost",
-    },
+    "ojroques/nvim-osc52",
     opts = {
-      fallback = "unnamedplus",
-      force_init_unnamed = true,
+      max_length = 0,
+      silent = false,
+      trim = false,
     },
   },
-  "ojroques/vim-oscyank",
 
   -- folds
   "pedrohdz/vim-yaml-folds",

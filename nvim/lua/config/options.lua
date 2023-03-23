@@ -7,6 +7,7 @@ vim.g.maplocalleader = ","
 
 local opt = vim.opt
 
+opt.clipboard = "unnamed,unnamedplus"
 opt.cc = "160" -- set an 160 column border for good coding style
 opt.mouse = "v" -- Enable mouse to copy
 opt.number = true -- Print line number
@@ -34,4 +35,3 @@ opt.undolevels = 10000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
-opt.clipboard = "unnamedplus"
