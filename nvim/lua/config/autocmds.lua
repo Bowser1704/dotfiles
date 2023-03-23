@@ -15,9 +15,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 local function copy()
-  if vim.v.event.operator == "y" and vim.v.event.regname == "+" then
-    require("osc52").copy_register("+")
-  end
+  require("osc52").copy_register("+")
 end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
