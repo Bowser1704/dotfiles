@@ -28,7 +28,7 @@ return {
   },
 
   -- folds
-  "pedrohdz/vim-yaml-folds",
+  { "pedrohdz/vim-yaml-folds", ft = { "yaml", "helm" } },
   "mg979/vim-visual-multi",
   "mboughaba/vim-lessmess",
   "lukas-reineke/indent-blankline.nvim",
