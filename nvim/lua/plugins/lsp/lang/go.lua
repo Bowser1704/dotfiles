@@ -10,6 +10,12 @@ return {
     end,
   },
 
+  -- helm color
+  {
+    "towolf/vim-helm",
+    ft = { "helm" },
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

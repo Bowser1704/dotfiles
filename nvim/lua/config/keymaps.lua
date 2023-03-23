@@ -43,3 +43,8 @@ map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsea
 -- save file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
+
+-- fTerm
+map({ "n", "t" }, "<A-o>", function()
+  require("FTerm").toggle()
+end, { desc = "toggle fTerm" })
