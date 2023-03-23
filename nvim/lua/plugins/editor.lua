@@ -17,9 +17,23 @@ return {
       blend = 10,
     },
   },
+  -- system clipboard
+  {
+    "EtiamNullam/deferred-clipboard.nvim",
+    event = {
+      "FocusGained",
+      "FocusLost",
+    },
+    opts = {
+      fallback = "unnamedplus",
+      force_init_unnamed = true,
+    },
+  },
+  "ojroques/vim-oscyank",
+
+  -- folds
   "pedrohdz/vim-yaml-folds",
   "mg979/vim-visual-multi",
-  "ojroques/vim-oscyank",
   "mboughaba/vim-lessmess",
   "lukas-reineke/indent-blankline.nvim",
 }
