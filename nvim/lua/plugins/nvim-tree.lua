@@ -51,7 +51,7 @@ return {
         width = 30,
       },
       git = {
-        ignore = true,
+        ignore = false,
       },
     },
   },
