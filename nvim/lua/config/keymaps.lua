@@ -49,3 +49,8 @@ map({ "i", "v", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file"
 map({ "n", "t" }, "<A-o>", function()
   require("FTerm").toggle()
 end, { desc = "toggle fTerm" })
+
+-- neochat
+map({ "n", "i" }, "<A-c>", function()
+  require("neochat").toggle()
+end, { desc = "toggle neochat" })
