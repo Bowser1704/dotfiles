@@ -2,7 +2,7 @@ return {
   -- formatters
   {
     "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile", "BufReadPost" },
     dependencies = { "mason.nvim" },
     opts = function()
       local nls = require("null-ls")
@@ -15,6 +15,8 @@ return {
           nls.builtins.formatting.fish_indent,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
+
+          nls.builtins.diagnostics.buf,
           nls.builtins.formatting.buf,
 
           nls.builtins.diagnostics.terraform_validate,

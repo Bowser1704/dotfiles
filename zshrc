@@ -116,5 +116,3 @@ _exists terraform && complete -o nospace -C $(which terraform) terraform
 _exists direnv && eval "$(direnv hook zsh)"
 
 unfunction _exists
-
-zinit creinstall ~/.local/completions

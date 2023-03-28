@@ -16,6 +16,16 @@ return {
       },
       blend = 10,
     },
+    keys = {
+      {
+        "<A-o>",
+        function()
+          require("FTerm").toggle()
+        end,
+        desc = "fterm",
+        mode = { "i", "n", "v", "t" },
+      },
+    },
   },
   -- system clipboard
   {
