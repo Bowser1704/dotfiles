@@ -14,11 +14,11 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
-local function copy()
-  require("osc52").copy_register("+")
-end
-
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("osc52"),
-  callback = copy,
+  callback = function()
+    if vim.v.event.operator == "y" then
+      require("osc52").copy_register("+")
+    end
+  end,
 })

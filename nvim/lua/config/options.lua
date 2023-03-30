@@ -7,7 +7,7 @@ vim.g.maplocalleader = ","
 
 local opt = vim.opt
 
-opt.clipboard = "unnamed,unnamedplus"
+opt.clipboard = "unnamed"
 opt.cc = "160" -- set an 160 column border for good coding style
 opt.mouse = "v" -- Enable mouse to copy
 opt.number = true -- Print line number
@@ -38,3 +38,6 @@ opt.winminwidth = 5 -- Minimum window width
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false -- Disable folding at startup.
+
+-- Fix markdown indentation settings
+vim.g.markdown_recommended_style = 0

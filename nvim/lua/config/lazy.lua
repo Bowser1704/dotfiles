@@ -22,7 +22,7 @@ require("lazy").setup({
         defaults = {
           autocmds = true, -- lazyvim.config.autocmds
           keymaps = false, -- lazyvim.config.keymaps
-          options = true, -- lazyvim.config.options
+          options = false, -- lazyvim.config.options
         },
       },
     },
