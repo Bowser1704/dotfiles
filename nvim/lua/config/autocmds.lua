@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("osc52"),
   callback = function()
-    if vim.v.event.operator == "y" then
+    if vim.v.event.regname == "+" then
       require("osc52").copy_register("+")
     end
   end,

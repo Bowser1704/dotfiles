@@ -15,6 +15,11 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
+-- copy to system desktop clipboard (unnamedplus register)
+map("n", "<leader>yy", '"+yy', { desc = "copy to system clipboard" })
+map("v", "<leader>y", '"+y', { desc = "copy to system clipboard" })
+map("v", "<leader>p", '"+p', { desc = "paste from system clipboard" })
+
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 map("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit current window" })
