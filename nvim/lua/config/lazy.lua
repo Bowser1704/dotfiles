@@ -7,6 +7,11 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
+  dev = {
+    path = "~/codebase/nvim-plugins/",
+    patterns = { "neochat.nvim" },
+    fallback = true,
+  },
   spec = {
     -- add LazyVim and import its plugins
     {
@@ -14,6 +19,11 @@ require("lazy").setup({
       import = "lazyvim.plugins",
       opts = {
         colorscheme = "sonokai",
+        defaults = {
+          autocmds = true, -- lazyvim.config.autocmds
+          keymaps = false, -- lazyvim.config.keymaps
+          options = true, -- lazyvim.config.options
+        },
       },
     },
     -- import any extras modules here
