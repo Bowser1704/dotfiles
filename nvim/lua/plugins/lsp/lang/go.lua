@@ -1,6 +1,6 @@
 return {
 
-  -- add json to treesitter
+  -- add go to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
