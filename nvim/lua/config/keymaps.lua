@@ -15,6 +15,8 @@ local function map(mode, lhs, rhs, opts)
   end
 end
 
+map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+
 -- copy to system desktop clipboard (unnamedplus register)
 map("n", "<leader>yy", '"+yy', { desc = "copy to system clipboard" })
 map("v", "<leader>y", '"+y', { desc = "copy to system clipboard" })
