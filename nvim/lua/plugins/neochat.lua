@@ -6,10 +6,20 @@ return {
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
+      -- optional
+      "nvim-telescope/telescope.nvim",
+      "f/awesome-chatgpt-prompts",
     },
     config = function()
       require("neochat").setup({
-        -- no config yet
+        layout_opts = {
+          relative = "editor",
+          position = "50%",
+          size = {
+            width = "80%",
+            height = "80%",
+          },
+        },
       })
     end,
     keys = {

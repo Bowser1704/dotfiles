@@ -3,6 +3,7 @@
   "LazyVim": { "branch": "main", "commit": "f67f20184f0fe852881d925d387ce138754fa147" },
   "LuaSnip": { "branch": "master", "commit": "bc8ec05022743d3f08bda7a76c6bb5e9a9024581" },
   "SchemaStore.nvim": { "branch": "main", "commit": "15022828c25a97a05b510b131a37d5b1330ee073" },
+  "awesome-chatgpt-prompts": { "branch": "main", "commit": "a0f5ffdb89d56b707964813510e568c2dd4018c1" },
   "bufferline.nvim": { "branch": "main", "commit": "3677aceb9a72630b0613e56516c8f7151b86f95c" },
   "catppuccin": { "branch": "main", "commit": "73587f9c454da81679202f1668c30fea6cdafd5e" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
@@ -55,6 +56,5 @@
   "vim-startify": { "branch": "master", "commit": "81e36c352a8deea54df5ec1e2f4348685569bed2" },
   "vim-startuptime": { "branch": "master", "commit": "6580cf539c33a212f4f5542068a3b4dd2b3ad834" },
   "vim-visual-multi": { "branch": "master", "commit": "724bd53adfbaf32e129b001658b45d4c5c29ca1a" },
-  "vim-yaml-folds": { "branch": "master", "commit": "890ccd8e5370808d569e96dbb06cbeca2cf5993a" },
   "which-key.nvim": { "branch": "main", "commit": "4b73390eec680b4c061ea175eb32c0ff3412271d" }
 }

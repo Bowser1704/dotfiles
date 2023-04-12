@@ -9,8 +9,6 @@ return {
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
-          nls.builtins.formatting.yamlfmt,
-
           nls.builtins.diagnostics.ruff,
           nls.builtins.formatting.autopep8,
           nls.builtins.formatting.autoflake,
