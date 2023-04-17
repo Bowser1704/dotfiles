@@ -25,6 +25,7 @@ return {
         "yaml",
         "proto",
         "terraform",
+        "go",
       },
       incremental_selection = {
         enable = true,
