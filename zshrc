@@ -126,4 +126,4 @@ _exists terraform && complete -o nospace -C $(which terraform) terraform
 
 unfunction _exists
 
-zinit snippet -Q ~/.local/completions
+zinit creinstall -q ~/.local/completions
