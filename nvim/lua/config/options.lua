@@ -7,7 +7,7 @@ vim.g.maplocalleader = ","
 
 local opt = vim.opt
 
-opt.clipboard = "unnamed" -- unnamed means primary clipboard (unnamedstar register)
+opt.clipboard = "" -- unnamed means primary clipboard (unnamedstar register)
 opt.cc = "160" -- set an 160 column border for good coding style
 opt.mouse = "v" -- Enable mouse to copy
 opt.number = true -- Print line number
