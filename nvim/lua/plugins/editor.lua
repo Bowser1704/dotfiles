@@ -1,5 +1,19 @@
 return {
   {
+    "echasnovski/mini.surround",
+    opts = {
+      mappings = {
+        add = "sa",
+        delete = "sd",
+        find = "sf",
+        find_left = "sF",
+        highlight = "sh",
+        replace = "sr",
+        update_n_lines = "sn",
+      },
+    },
+  },
+  {
     "windwp/nvim-spectre",
     -- stylua: ignore
     keys = {
@@ -53,7 +67,7 @@ return {
       local keymaps = {
         mode = { "n", "v" },
         ["g"] = { name = "+goto" },
-        ["gz"] = { name = "+surround" },
+        ["s"] = { name = "+surround" },
         ["]"] = { name = "+next" },
         ["["] = { name = "+prev" },
         ["<leader><tab>"] = { name = "+tabs" },

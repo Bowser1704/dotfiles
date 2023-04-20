@@ -9,7 +9,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   dev = {
     path = "~/codebase/nvim-plugins/",
-    patterns = { "neochat.nvim" },
+    patterns = { "neochat.nvim", "codeium.nvim" },
     fallback = true,
   },
   spec = {
@@ -27,7 +27,6 @@ require("lazy").setup({
       },
     },
     -- import any extras modules here
-    -- { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins

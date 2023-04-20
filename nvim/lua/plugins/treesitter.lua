@@ -25,10 +25,9 @@ return {
         "yaml",
         "proto",
         "terraform",
-        "go",
       },
       incremental_selection = {
-        enable = true,
+        enable = false,
         keymaps = {
           init_selection = "gnn",
           node_incremental = "grn",
@@ -37,5 +36,9 @@ return {
         },
       },
     },
+    ---@param opts TSConfig
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 }

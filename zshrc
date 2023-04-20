@@ -5,6 +5,7 @@ export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.spicetify
 export PATH=$PATH:$HOME/.krew/bin
+export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
@@ -127,3 +128,20 @@ _exists terraform && complete -o nospace -C $(which terraform) terraform
 unfunction _exists
 
 zinit creinstall -q ~/.local/completions
+
+
+function howto() {
+    # read input from flags or stdin if no tty
+    input=$(if [ -t 0 ]; then echo $@; else cat -; fi)
+
+    # escape double quotes
+    input=${input//\"/\\\"}
+
+    content=$(cat<<EOF
+I want you to act as a shell command assistant. I will type my goal in natural language, and you will output the shell command that can achieve my goal.
+I want you to only output plain shell commands with corresponding escape, do not add any markdown tags, do not add any explanations. My first goal is: "${input}"
+EOF
+)
+    output=$(openai api chat_completions.create -m 'gpt-3.5-turbo' -g user "${content}")
+    print -z "$output"
+}

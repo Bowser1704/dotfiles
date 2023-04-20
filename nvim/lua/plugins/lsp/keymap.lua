@@ -8,8 +8,6 @@ return {
       keys[#keys + 1] = { "gi", vim.lsp.buf.implementation, desc = "Go to implementation" }
       -- add fd keymap
       keys[#keys + 1] = { "<leader>fd", vim.diagnostic.open_float, desc = "Float Diagnostics" }
-      -- disable default keymap
-      keys[#keys + 1] = { "<leader>fd", false }
       -- add rename keymap
       if require("lazyvim.util").has("inc-rename.nvim") then
         keys[#keys + 1] = {
