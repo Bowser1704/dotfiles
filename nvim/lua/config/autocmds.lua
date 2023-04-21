@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  group = augroup("helm-ft"),
+  group = augroup("terraform-ft"),
   pattern = { "*.tf" },
   callback = function()
     vim.bo.filetype = "terraform"
