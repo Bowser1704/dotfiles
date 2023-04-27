@@ -38,6 +38,7 @@ opt.winminwidth = 5 -- Minimum window width
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false -- Disable folding at startup.
+opt.expandtab = true
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0

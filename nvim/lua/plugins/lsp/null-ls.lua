@@ -22,6 +22,8 @@ return {
           nls.builtins.diagnostics.tfsec,
           nls.builtins.formatting.terraform_fmt,
           nls.builtins.formatting.hclfmt,
+
+          nls.builtins.formatting.gofumpt,
         },
       }
     end,

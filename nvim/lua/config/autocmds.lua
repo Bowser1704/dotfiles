@@ -30,3 +30,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("enable-tab"),
+  pattern = "go",
+  callback = function()
+    vim.bo.expandtab = false
+  end,
+})
