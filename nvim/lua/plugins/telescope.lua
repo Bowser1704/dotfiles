@@ -2,6 +2,12 @@ return {
   -- add extra telescope keymaps
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "folke/noice.nvim",
+    },
+    init = function()
+      require("telescope").load_extension("noice")
+    end,
     opts = {
       defaults = {
         layout_strategy = "horizontal",
@@ -28,6 +34,7 @@ return {
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
       { "<leader>hh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Find Noice" },
       -- add a keymap to browse plugin files
       -- stylua: ignore
       {

@@ -110,9 +110,6 @@ return {
         ["<leader>u"] = { name = "+ui" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
       }
-      if require("lazyvim.util").has("noice.nvim") then
-        keymaps["<leader>sn"] = { name = "+noice" }
-      end
       wk.register(keymaps)
     end,
   },
@@ -160,4 +157,5 @@ return {
       end,
     },
   },
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
 }
