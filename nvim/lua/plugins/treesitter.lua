@@ -1,6 +1,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     opts = {
       highlight = { enable = true },
       indent = { enable = true, disable = { "python" } },
@@ -40,5 +43,27 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = {
+      "html",
+      "javascript",
+      "typescript",
+      "javascriptreact",
+      "typescriptreact",
+      "svelte",
+      "vue",
+      "tsx",
+      "jsx",
+      "rescript",
+      "xml",
+      "php",
+      "markdown",
+      "astro",
+      "glimmer",
+      "handlebars",
+      "hbs",
+    },
   },
 }

@@ -13,4 +13,16 @@ return {
       },
     },
   },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      ft = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+      servers = {
+        volar = {
+          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+        },
+      },
+    },
+  },
 }
