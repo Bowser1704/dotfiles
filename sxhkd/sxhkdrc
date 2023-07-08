@@ -8,11 +8,15 @@ super + Return
 
 # program launcher
 super + @space
-    rofi -show combi
+  rofi -show combi
 
 # make sxhkd reload its configuration files:
 super + Escape
   pkill -USR1 -x sxhkd
+
+# bsplock
+super + l
+  ./scripts/bsplock
 
 ##---------- System Keys ----------##
 
