@@ -1,7 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    version = false, -- last release is way too old
+    commit = "6c84bc75c64f778e9f1dcb798ed41c7fcb93b639", -- last release is way too old
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -19,7 +19,6 @@ return {
         "jcdickinson/codeium.nvim",
         dependencies = {
           "nvim-lua/plenary.nvim",
-          "hrsh7th/nvim-cmp",
         },
         cmd = "Codeium",
         build = ":Codeium auth",
