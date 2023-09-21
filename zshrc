@@ -145,3 +145,5 @@ EOF
     output=$(openai api chat_completions.create -m 'gpt-3.5-turbo' -g user "${content}")
     print -z "$output"
 }
+
+[[ -s "/home/hongqi.yu/.gvm/scripts/gvm" ]] && source "/home/hongqi.yu/.gvm/scripts/gvm"

@@ -24,6 +24,7 @@ return {
           nls.builtins.formatting.hclfmt,
 
           nls.builtins.formatting.gofumpt,
+          nls.builtins.diagnostics.golangci_lint,
 
           nls.builtins.diagnostics.sqlfluff.with({
             extra_args = { "--dialect", "postgres" }, -- change to your dialect
