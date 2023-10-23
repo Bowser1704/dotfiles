@@ -15,3 +15,4 @@
     ~/.config/rofi: rofi
     ~/.config/polybar: polybar
     ~/.config/fontconfig: fontconfig
+    ~/.local/completions: completions

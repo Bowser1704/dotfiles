@@ -22,9 +22,6 @@ return {
         volar = {
           filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
         },
-        rome = {
-          filetypes = { "javascript", "javascriptreact", "typescriptreact", "typescript" },
-        },
         clangd = {
           filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
         },

@@ -115,7 +115,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 if _exists pyenv; then
     eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
 fi
 
 _exists istioctl && istioctl completion zsh > ~/.local/completions/_istioctl

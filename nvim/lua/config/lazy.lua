@@ -28,6 +28,7 @@ require("lazy").setup({
     },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins
+    { import = "lazyvim.plugins.extras.lsp.none-ls" },
     { import = "plugins" },
     { import = "plugins/lsp" },
     { import = "plugins/lsp/lang" },
