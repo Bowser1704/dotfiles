@@ -1,11 +1,16 @@
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/opt/homebrew/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.spicetify
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
+
+export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
