@@ -146,7 +146,7 @@ I want you to act as a shell command assistant. I will type my goal in natural l
 I want you to only output plain shell commands with corresponding escape, do not add any markdown tags, do not add any explanations. My first goal is: "${input}"
 EOF
 )
-    output=$(openai api chat_completions.create -m 'gpt-3.5-turbo' -g user "${content}")
+    output=$(openai api chat.completions.create -m 'gpt-3.5-turbo' -g user "${content}")
     print -z "$output"
 }
 
