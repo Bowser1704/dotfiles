@@ -1,16 +1,10 @@
+export PATH=$HOME/.asdf/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/opt/homebrew/bin
-export PATH=$PATH:$HOME/go/bin
-export PATH=$PATH:$HOME/.tiup/bin
 export PATH=$PATH:$HOME/.cargo/bin
-export PATH=$PATH:$HOME/.spicetify
-export PATH=$PATH:$HOME/.krew/bin
-export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
+export PATH=$PATH:/opt/homebrew/bin
 
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
-
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
@@ -76,6 +70,7 @@ zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::git
 zinit snippet OMZP::gitignore
 zinit snippet OMZP::cp
+zinit snippet OMZP::asdf
 
 # For postponing loading `fzf`
 zinit ice lucid wait
@@ -86,7 +81,7 @@ test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/bre
 
 _exists() { (( $+commands[$1])) }
 
-_exists exa     && alias ls='exa --icons --git' && alias ll='ls -lh'
+_exists exa     && alias ls='exa --icons' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
 _exists batcat  && alias cat='batcat'
@@ -98,9 +93,6 @@ _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie' && compdef _curl curlie
 _exists delta   && alias diff='delta'
 _exists difft   && alias diff='difft'
-if [[ -n $TERM ]]; then
-    alias pbcopy='xargs tmux set-buffer'
-fi
 
 if _exists nvim; then
     export EDITOR=nvim
@@ -108,18 +100,6 @@ if _exists nvim; then
     export MANPAGER="nvim +Man!"
     alias vim='nvim'
     alias vi='nvim'
-fi
-
-if _exists nvm; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-if _exists pyenv; then
-    eval "$(pyenv init -)"
 fi
 
 _exists istioctl && istioctl completion zsh > ~/.local/completions/_istioctl
@@ -131,8 +111,11 @@ _exists terraform && complete -o nospace -C $(which terraform) terraform
 
 unfunction _exists
 
-zinit creinstall -q ~/.local/completions
+# if [[ -n $TERM ]]; then
+#     alias pbcopy='xargs tmux set-buffer'
+# fi
 
+zinit creinstall -q ~/.local/completions
 
 function howto() {
     # read input from flags or stdin if no tty
@@ -149,5 +132,3 @@ EOF
     output=$(openai api chat.completions.create -m 'gpt-3.5-turbo' -g user "${content}")
     print -z "$output"
 }
-
-[[ -s "/home/hongqi.yu/.gvm/scripts/gvm" ]] && source "/home/hongqi.yu/.gvm/scripts/gvm"

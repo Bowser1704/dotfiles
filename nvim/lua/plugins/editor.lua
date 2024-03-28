@@ -158,4 +158,5 @@ return {
     },
   },
   { "akinsho/git-conflict.nvim", version = "*", config = true },
+  { "kevinhwang91/nvim-ufo", dependencies = "kevinhwang91/promise-async" },
 }
