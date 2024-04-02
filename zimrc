@@ -1,3 +1,4 @@
+zmodule romkatv/powerlevel10k --use degit
 zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
 ## Prompts
 zmodule asdf
@@ -10,9 +11,7 @@ zmodule ohmyzsh/ohmyzsh --root plugins/brew
 zmodule ohmyzsh/ohmyzsh --root plugins/golang
 zmodule ohmyzsh/ohmyzsh --root plugins/copybuffer
 zmodule ohmyzsh/ohmyzsh --root plugins/kubectx
-zmodule reegnz/jq-zsh-plugin
-zmodule jonmosco/kube-ps1
-zmodule romkatv/powerlevel10k --use degit
+
 zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
 
@@ -21,9 +20,11 @@ zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule ohmyzsh/ohmyzsh --root plugins/gitfast
 zmodule ohmyzsh/ohmyzsh --root plugins/tmux
 zmodule ohmyzsh/ohmyzsh --root plugins/docker-compose
+zmodule ohmyzsh/ohmyzsh --root plugins/history
 
 zmodule zsh-users/zsh-history-substring-search
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 
-zmodule ohmyzsh/ohmyzsh --root plugins/fzf
+zmodule jeffreytse/zsh-vi-mode
+#zmodule ohmyzsh/ohmyzsh --root plugins/fzf

@@ -1,3 +1,13 @@
+bindkey -e
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
 # ------------------
 # Initialize modules
 # ------------------
@@ -30,7 +40,6 @@ export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebr
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 _exists() { (( $+commands[$1])) }
-
 _exists exa     && alias ls='exa --icons' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
@@ -58,5 +67,4 @@ unfunction _exists
 #     alias pbcopy='xargs tmux set-buffer'
 # fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
