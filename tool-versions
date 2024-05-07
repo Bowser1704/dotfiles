@@ -4,3 +4,7 @@ neovim stable
 python 3.11.8
 kubectl 1.29.3
 k9s 0.32.4
+fd 9.0.0
+lazygit 0.41.0
+krew 0.4.4
+yq 4.43.1

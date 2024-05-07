@@ -10,6 +10,21 @@ return {
     end,
   },
 
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      ft = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+      servers = {
+        volar = {
+          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+        },
+        clangd = {
+          filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+        },
+      },
+    },
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

@@ -2,9 +2,12 @@ export PATH=$HOME/.asdf/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/opt/homebrew/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
@@ -37,8 +40,6 @@ zinit light-mode for \
 export POWERLEVEL9K_INSTANT_PROMPT=quiet
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -49,36 +50,48 @@ zinit wait lucid light-mode for \
   atload"_zsh_autosuggest_start" \
       zsh-users/zsh-autosuggestions \
   blockf atpull'zinit creinstall -q .' \
-      zsh-users/zsh-completions
-
-
-# zsh-vi-mode
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
-# For postponing loading `fzf`
-zinit ice lucid wait; zinit snippet OMZP::fzf
-
-# zsh completion
-zinit ice blockf; zinit light zsh-users/zsh-completions
-zstyle ':completion:*:*:make:*' tag-order 'targets'
+      zsh-users/zsh-completions \
 
 # omz plugin
 zinit light-mode for \
+  as"completion" \
+    OMZP::docker/completions/_docker \
+    OMZL::completion.zsh
+
+zinit light-mode for \
     hlissner/zsh-autopair \
-    superbrothers/zsh-kubectl-prompt
+    superbrothers/zsh-kubectl-prompt \
+    OMZP::kubectl \
+    OMZP::gitignore \
+    OMZP::cp \
+    OMZP::asdf \
+    OMZL::clipboard.zsh \
+    OMZL::history.zsh \
 
 zinit ice atload"unalias grv"; zinit snippet OMZP::git
-zinit snippet OMZL::clipboard.zsh
-zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::history.zsh
-zinit snippet OMZP::gitignore
-zinit snippet OMZP::cp
-zinit snippet OMZP::asdf
 
 zinit from"gh-r" as"program" mv"direnv* -> direnv" \
     atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
     pick"direnv" src="zhook.zsh" for \
         direnv/direnv
 
+# zsh-vi-mode
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+# For postponing loading `fzf`
+zinit ice lucid wait; zinit snippet OMZP::fzf
+
+
+load_completion_with_zinit() {
+  # Check if an argument is provided
+  if [ -z "$1" ]; then
+    echo "Usage: load_completion_with_zinit <command>"
+    return 1
+  fi
+
+  # Generate and load completion script using Zinit
+  zinit ice as"completion" wait"0" lucid
+  zinit snippet <<<"$($1 completion zsh)"
+}
 
 _exists() { (( $+commands[$1])) }
 _exists exa     && alias ls='exa --icons' && alias ll='ls -lh'
@@ -93,6 +106,7 @@ _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie' && compdef _curl curlie
 _exists delta   && alias diff='delta'
 _exists difft   && alias diff='difft'
+# _exists kubectl && load_completion_with_zinit kubectl
 
 if _exists nvim; then
     export EDITOR=nvim

@@ -2,10 +2,43 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      servers = {
+        basedpyright = {
+          enabled = true,
+          settings = {
+            basedpyright = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = "basic",
+              },
+            },
+          },
+        },
+        ruff = {
+          keys = {
+            {
+              "<leader>ca",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
+          },
+        },
+      },
       setup = {
-        ruff_lsp = function()
-          require("lazyvim.util").lsp.on_attach(function(client)
-            if client.name == "ruff_lsp" then
+        ruff = function()
+          LazyVim.lsp.on_attach(function(client, _)
+            if client.name == "ruff" then
+              -- Disable hover in favor of Pyright
               client.server_capabilities.hoverProvider = false
             end
           end)
@@ -13,19 +46,37 @@ return {
       },
     },
   },
-
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      ft = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-      servers = {
-        volar = {
-          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-        },
-        clangd = {
-          filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
-        },
-      },
-    },
+    -- "numiras/semshi",
+    "wookayin/semshi", -- use a maintained fork
+    ft = "python",
+    build = ":UpdateRemotePlugins",
+    init = function()
+      -- Disabled these features better provided by LSP or other more general plugins
+      vim.g["semshi#error_sign"] = false
+      vim.g["semshi#simplify_markup"] = false
+      vim.g["semshi#mark_selected_nodes"] = false
+      vim.g["semshi#update_delay_factor"] = 0.001
+
+      -- This autocmd must be defined in init to take effect
+      vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
+        group = vim.api.nvim_create_augroup("SemanticHighlight", {}),
+        callback = function()
+          -- Only add style, inherit or link to the LSP's colors
+          vim.cmd([[
+            highlight! link semshiGlobal  @none
+            highlight! link semshiImported @none
+            highlight! link semshiParameter @lsp.type.parameter
+            highlight! link semshiBuiltin @function.builtin
+            highlight! link semshiAttribute @field
+            highlight! link semshiSelf @lsp.type.selfKeyword
+            highlight! link semshiUnresolved @none
+            highlight! link semshiFree @none
+            highlight! link semshiAttribute @none
+            highlight! link semshiParameterUnused @none
+            ]])
+        end,
+      })
+    end,
   },
 }

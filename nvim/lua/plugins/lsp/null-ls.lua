@@ -9,8 +9,6 @@ return {
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
-          nls.builtins.formatting.black,
-
           nls.builtins.formatting.fish_indent,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
@@ -25,7 +23,7 @@ return {
 
           nls.builtins.formatting.gofumpt,
           nls.builtins.diagnostics.golangci_lint.with({
-            extra_args = { "--fix" },
+            -- extra_args = { "--fix" },
           }),
 
           nls.builtins.diagnostics.sqlfluff.with({
