@@ -4,12 +4,13 @@
 
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
+vim.g.have_nerd_font = true
 
 local opt = vim.opt
 
 opt.clipboard = "" -- unnamed means primary clipboard (unnamedstar register)
 opt.cc = "160" -- set an 160 column border for good coding style
-opt.mouse = "v" -- Enable mouse to copy
+opt.mouse = "vc" -- Enable mouse to copy
 opt.number = true -- Print line number
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
@@ -39,6 +40,8 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false -- Disable folding at startup.
 opt.expandtab = true
+opt.breakindent = true
+opt.undofile = true
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
