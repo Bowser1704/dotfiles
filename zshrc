@@ -4,6 +4,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/opt/homebrew/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+export TERM="xterm-256color"
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
 export LANG=en_US.UTF-8
