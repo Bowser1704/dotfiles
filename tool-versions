@@ -1,6 +1,6 @@
 nodejs 21.6.2
-golang 1.21.8
-neovim stable
+golang 1.20.14
+neovim 0.10.0
 python 3.11.8
 kubectl 1.29.3
 k9s 0.32.4
@@ -8,3 +8,6 @@ fd 9.0.0
 lazygit 0.41.0
 krew 0.4.4
 yq 4.43.1
+exa 0.10.1
+fzf 0.52.1
+difftastic 0.58.0

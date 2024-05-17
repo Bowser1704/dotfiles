@@ -3,7 +3,7 @@
 -- Add any additional autocmds here
 
 local function augroup(name)
-  return vim.api.nvim_create_augroup("custom_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("basic_" .. name, { clear = true })
 end
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -19,15 +19,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "*.tf" },
   callback = function()
     vim.bo.filetype = "terraform"
-  end,
-})
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = augroup("osc52"),
-  callback = function()
-    if vim.v.event.regname == "+" then
-      require("osc52").copy_register("+")
-    end
   end,
 })
 
