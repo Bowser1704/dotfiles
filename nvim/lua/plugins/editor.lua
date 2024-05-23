@@ -1,4 +1,13 @@
 return {
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
   -- auto pairs
   {
     "echasnovski/mini.pairs",
@@ -14,13 +23,13 @@ return {
       local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
       local opts = require("lazy.core.plugin").values(plugin, "opts", false)
       local mappings = {
-        { opts.mappings.add,            desc = "Add surrounding",                     mode = { "n", "v" } },
-        { opts.mappings.delete,         desc = "Delete surrounding" },
-        { opts.mappings.find,           desc = "Find right surrounding" },
-        { opts.mappings.find_left,      desc = "Find left surrounding" },
-        { opts.mappings.highlight,      desc = "Highlight surrounding" },
+        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
+        { opts.mappings.delete, desc = "Delete surrounding" },
+        { opts.mappings.find, desc = "Find right surrounding" },
+        { opts.mappings.find_left, desc = "Find left surrounding" },
+        { opts.mappings.highlight, desc = "Highlight surrounding" },
 
-        { opts.mappings.replace,        desc = "Replace surrounding" },
+        { opts.mappings.replace, desc = "Replace surrounding" },
         { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
       }
       mappings = vim.tbl_filter(function(m)
@@ -89,7 +98,7 @@ return {
           end
         end,
       })
-    end
+    end,
   },
 
   "mg979/vim-visual-multi",
@@ -167,6 +176,6 @@ return {
       end,
     },
   },
-  { "akinsho/git-conflict.nvim", version = "*",                              config = true },
-  { "kevinhwang91/nvim-ufo",     dependencies = "kevinhwang91/promise-async" },
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
+  { "kevinhwang91/nvim-ufo", dependencies = "kevinhwang91/promise-async" },
 }
