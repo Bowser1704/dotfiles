@@ -11,11 +11,10 @@ return {
           "nvim-telescope/telescope.nvim",
           "nvim-lua/plenary.nvim",
           "nvim-tree/nvim-web-devicons",
-        }
-      }
-
+        },
+      },
     },
-    event = 'VeryLazy',
+    event = "VeryLazy",
     init = function()
       require("telescope").load_extension("noice")
       require("telescope").load_extension("ui-select")
@@ -50,31 +49,34 @@ return {
           hijack_netrw = true,
           mappings = {},
         },
-      }
+      },
     },
     keys = {
-      { "<leader>:",  "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       -- find
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>",       desc = "live grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>",         desc = "Buffers" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>",      desc = "Find Files (root dir)" },
-      { "<leader>hh", "<cmd>Telescope help_tags<cr>",       desc = "Help Pages" },
-      { "<leader>fn", "<cmd>Telescope noice<cr>",           desc = "Find Noice" },
-      { "<leader>ft", "<cmd>Telescope file_browser<cr>",    desc = "File Browsers" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "live grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
+      { "<leader>hh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Find Noice" },
+      { "<leader>ft", "<cmd>Telescope file_browser<cr>", desc = "File Browsers" },
       {
         "<leader>fp",
-        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
+        function()
+          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
+        end,
         desc = "Find Plugin File",
       },
       -- git
-      { "<leader>gc", "<cmd>Telescope git_commits<CR>",         desc = "Commits" },
-      { "<leader>gs", "<cmd>Telescope git_status<CR>",          desc = "Status" },
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
       -- search
-      { '<leader>s"', "<cmd>Telescope registers<cr>",           desc = "Registers" },
-      { "<leader>sk", "<cmd>Telescope keymaps<cr>",             desc = "Key Maps" },
-      { "<leader>so", "<cmd>Telescope vim_options<cr>",         desc = "Options" },
+      { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
+      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
-      { "<leader>sM", "<cmd>Telescope man_pages<cr>",           desc = "Man Pages" },
+      { "<leader>sD", "<cmd>Telescope diagnostics <cr>", desc = "Document Diagnostics" },
+      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
     },
   },
 }
