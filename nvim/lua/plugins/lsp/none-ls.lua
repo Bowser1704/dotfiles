@@ -8,12 +8,20 @@ return {
     },
     config = function()
       require("mason").setup()
-      require("null-ls").setup()
+      local nls = require("null-ls")
+      nls.setup({
+        debug = true,
+      })
 
       require("mason-null-ls").setup({
         ensure_installed = { "stylua", "prettierd", "buf", "yamlfmt" },
         automatic_installation = true,
-        handlers = {},
+        handlers = {
+          buf = function()
+            nls.register(nls.builtins.formatting.buf)
+            nls.register(nls.builtins.diagnostics.buf)
+          end,
+        },
         methods = {
           diagnostics = true,
           formatting = true,
@@ -23,5 +31,14 @@ return {
         },
       })
     end,
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
   },
 }

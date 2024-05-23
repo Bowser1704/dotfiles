@@ -15,14 +15,25 @@ return {
         },
       },
       {
-        "jcdickinson/codeium.nvim",
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-        },
-        cmd = "Codeium",
-        build = ":Codeium auth",
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
         config = function()
-          require("codeium").setup({})
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+            filetypes = {
+              markdown = true,
+              help = true,
+            },
+          })
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = "zbirenbaum/copilot.lua",
+        config = function()
+          require("copilot_cmp").setup()
         end,
       },
     },
@@ -85,11 +96,11 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "codeium" },
+          { name = "copilot" },
           { name = "nvim_lsp" },
+          { name = "path" },
           { name = "luasnip" },
           { name = "buffer" },
-          { name = "path" },
         }),
         window = {
           documentation = {
