@@ -16,3 +16,4 @@ terraform 1.8.3
 vault 1.13.4
 argocd 2.9.15
 istioctl 1.13.4
+github-cli 2.49.2

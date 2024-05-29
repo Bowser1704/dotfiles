@@ -58,6 +58,9 @@ return {
     keys = {
       { "<leader>S", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
+    opts = {
+      is_block_ui_break = true,
+    }
   },
   {
     "numToStr/FTerm.nvim",

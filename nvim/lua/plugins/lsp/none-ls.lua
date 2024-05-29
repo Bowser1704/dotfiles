@@ -14,14 +14,9 @@ return {
       })
 
       require("mason-null-ls").setup({
-        ensure_installed = { "stylua", "prettierd", "buf", "yamlfmt" },
+        ensure_installed = { "stylua", "buf", "yamlfmt" },
         automatic_installation = true,
-        handlers = {
-          buf = function()
-            nls.register(nls.builtins.formatting.buf)
-            nls.register(nls.builtins.diagnostics.buf)
-          end,
-        },
+        handlers = {},
         methods = {
           diagnostics = true,
           formatting = true,

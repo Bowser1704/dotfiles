@@ -114,7 +114,9 @@ return {
             mode = "symbol_text",
             maxwidth = 50,
             ellipsis_char = "...",
-            symbol_map = { Codeium = "" },
+            symbol_map = {
+              Copilot = "",
+            },
             menu = setmetatable({
               nvim_lsp = "[LSP]",
               luasnip = "[Snip]",
