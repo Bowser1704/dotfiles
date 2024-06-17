@@ -6,6 +6,9 @@ return {
   },
   {
     "smjonas/inc-rename.nvim",
+    dependencies = {
+      "folke/trouble.nvim",
+    },
     cmd = "IncRename",
     config = function()
       require("inc_rename").setup()
@@ -35,7 +38,7 @@ return {
           -- because they only work if you have an active language server
 
           vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-          vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
+          vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<cr>", opts)
           vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
           vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
           vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", opts)
