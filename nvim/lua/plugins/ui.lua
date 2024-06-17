@@ -4,7 +4,7 @@ return {
   -- the colorscheme should be available when starting Neovim
   {
     "sainnhe/sonokai",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- load the colorscheme here
@@ -13,7 +13,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
     },
   },
   {
@@ -25,7 +24,7 @@ return {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",            desc = "Toggle pin" },
+      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
       { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
     },
     opts = {
@@ -35,7 +34,7 @@ return {
         diagnostics_indicator = function(_, _, diag)
           local icons = util.icons.diagnostics
           local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-              .. (diag.warning and icons.Warn .. diag.warning or "")
+            .. (diag.warning and icons.Warn .. diag.warning or "")
           return vim.trim(ret)
         end,
         offsets = {
@@ -84,11 +83,11 @@ return {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = true,         -- use a classic bottom cmdline for search
-        command_palette = true,       -- position the cmdline and popupmenu together
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = true,            -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = true,        -- add a border to hover docs and signature help
+        inc_rename = true, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = true, -- add a border to hover docs and signature help
       },
     },
   },
