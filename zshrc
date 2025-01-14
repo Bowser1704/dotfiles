@@ -122,3 +122,4 @@ unfunction _exists
 # if [[ -n $TERM ]]; then
 #     alias pbcopy='xargs tmux set-buffer'
 # fi
+eval "$(gh copilot alias -- zsh)"

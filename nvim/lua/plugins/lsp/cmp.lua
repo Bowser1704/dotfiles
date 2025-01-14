@@ -39,9 +39,11 @@ return {
     },
     opts = function()
       local has_words_before = function()
-        unpack = unpack or table.unpack
+        if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
+          return false
+        end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
       end
 
       local toCamelCase = function(str)
@@ -54,7 +56,7 @@ return {
       local cmp = require("cmp")
       return {
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,noinsert,noselect,popup",
         },
         snippet = {
           expand = function(args)
@@ -72,19 +74,13 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- they way you will only jump inside the snippet region
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_locally_jumpable()
-            elseif has_words_before() then
-              cmp.complete()
+          ["<Tab>"] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             else
               fallback()
             end
-          end, { "i", "s" }),
+          end),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -133,6 +129,24 @@ return {
         experimental = {
           ghost_text = {
             hl_group = "LspCodeLens",
+          },
+        },
+        sorting = {
+          priority_weight = 2,
+          comparators = {
+            require("copilot_cmp.comparators").prioritize,
+
+            -- Below is the default comparitor list and order for nvim-cmp
+            cmp.config.compare.offset,
+            -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
           },
         },
       }

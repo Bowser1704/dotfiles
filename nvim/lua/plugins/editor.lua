@@ -112,36 +112,6 @@ return {
   "mg979/vim-visual-multi",
   "mboughaba/vim-lessmess",
 
-  -- which keys
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      plugins = { spelling = true },
-    },
-    config = function(_, opts)
-      local wk = require("which-key")
-      wk.setup(opts)
-      local keymaps = {
-        mode = { "n", "v" },
-        ["g"] = { name = "+goto" },
-        ["s"] = { name = "+surround" },
-        ["]"] = { name = "+next" },
-        ["["] = { name = "+prev" },
-        ["<leader><tab>"] = { name = "+tabs" },
-        ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file/find" },
-        ["<leader>h"] = { name = "+hunks" },
-        ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
-        ["<leader>u"] = { name = "+ui" },
-        ["<leader>x"] = { name = "+diagnostics/quickfix" },
-      }
-      wk.register(keymaps)
-    end,
-  },
-
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
