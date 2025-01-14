@@ -82,8 +82,8 @@ return {
           },
           -- Accept the diff
           accept_diff = {
-            normal = "<C-i>",
-            insert = "<C-i>",
+            normal = "<C-y>",
+            insert = "<C-y>",
           },
           -- Show help
           show_help = {
