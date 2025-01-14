@@ -150,13 +150,19 @@ return {
           })
         end,
 
+        ["clangd"] = function()
+          require("lspconfig").clangd.setup({
+            filetypes = { "c", "cpp", "objc", "objcpp" },
+          })
+        end,
+
         ["basedpyright"] = function()
           require("lspconfig").basedpyright.setup({
             settings = {
               basedpyright = {
                 analysis = {
                   autoSearchPaths = true,
-                  diagnosticMode = "openFilesOnly",
+                  diagnosticMode = "openFilesOnly", -- workspace mode is too slow
                   useLibraryCodeForTypes = true,
                   typeCheckingMode = "basic",
                 },
