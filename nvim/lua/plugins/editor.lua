@@ -88,26 +88,6 @@ return {
       },
     },
   },
-  -- system clipboard
-  {
-    "ojroques/nvim-osc52",
-    opts = {
-      max_length = 0,
-      silent = false,
-      trim = false,
-    },
-    config = function()
-      vim.api.nvim_create_augroup("TextYankPost_osc52", {})
-      vim.api.nvim_create_autocmd("TextYankPost", {
-        group = "TextYankPost_osc52",
-        callback = function()
-          if vim.v.event.regname == "+" then
-            require("osc52").copy_register("+")
-          end
-        end,
-      })
-    end,
-  },
 
   "mg979/vim-visual-multi",
   "mboughaba/vim-lessmess",
