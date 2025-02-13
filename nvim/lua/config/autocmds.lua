@@ -30,3 +30,17 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.expandtab = false
   end,
 })
+
+-- Fix "waiting for osc52 response from terminal" message
+-- https://github.com/neovim/neovim/issues/28611
+if vim.env.SSH_TTY ~= nil then
+  -- Set up clipboard for ssh
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    pattern = "*",
+    callback = function()
+      if vim.v.event.operator == "y" and vim.v.event.regname == "+" then
+        require("vim.ui.clipboard.osc52").copy("+")
+      end
+    end,
+  })
+end
