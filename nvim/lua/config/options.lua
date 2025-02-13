@@ -27,7 +27,6 @@ opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
-opt.spelllang = { "en" }
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 opt.tabstop = 2 -- Number of spaces tabs count for
@@ -45,32 +44,9 @@ opt.expandtab = true
 opt.breakindent = true
 opt.undofile = true
 
+opt.spelllang = { "en" }
+opt.spell = true
+opt.spelloptions = "camel"
+
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
-
--- system clipboard
-vim.opt.clipboard:append("unnamedplus")
--- Fix "waiting for osc52 response from terminal" message
--- https://github.com/neovim/neovim/issues/28611
-if vim.env.SSH_TTY ~= nil then
-  -- Set up clipboard for ssh
-  local function my_paste(_)
-    return function(_)
-      local content = vim.fn.getreg('"')
-      return vim.split(content, "\n")
-    end
-  end
-  vim.g.clipboard = {
-    name = "OSC 52",
-    copy = {
-      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-    },
-    paste = {
-      -- No OSC52 paste action since wezterm doesn't support it
-      -- Should still paste from nvim
-      ["+"] = my_paste("+"),
-      ["*"] = my_paste("*"),
-    },
-  }
-end
