@@ -22,8 +22,8 @@ return {
     --   end
     -- end,
     opts = {
-      sync_root_with_cwd = false,
-      respect_buf_cwd = false,
+      select_prompts = true,
+      prefer_startup_root = true,
       diagnostics = {
         enable = true,
       },
@@ -44,8 +44,10 @@ return {
       },
       update_focused_file = {
         enable = true,
-        update_root = true,
-        ignore_list = {},
+        update_root = {
+          enable = true,
+          ignore_list = {},
+        },
       },
       view = {
         width = 30,

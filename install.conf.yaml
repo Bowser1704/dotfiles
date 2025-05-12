@@ -1,14 +1,14 @@
 - defaults:
     link:
       relink: true
-
 - clean: ["~"]
-
 - link:
     ~/.tool-versions: tool-versions
     ~/.config/nvim: nvim
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
+    ~/.ruff.toml: ruff.toml
+    ~/.stylua.toml: stylua.toml
     ~/.config/alacritty: alacritty
     ~/.config/zellij: zellij
     ~/.config/bspwm: bspwm
