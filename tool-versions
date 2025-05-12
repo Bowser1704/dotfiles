@@ -17,5 +17,5 @@ vault 1.13.4
 argocd 2.9.15
 istioctl 1.24.2
 github-cli 2.67.0
-stern 1.30.0
+stern 1.32.0
 pdm 2.19.3

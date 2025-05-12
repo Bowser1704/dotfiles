@@ -156,6 +156,15 @@ return {
           })
         end,
 
+        ["ruff"] = function()
+          require("lspconfig").ruff.setup({
+            init_options = {
+              lint = { enable = false },
+              format = { enable = true },
+            },
+          })
+        end,
+
         ["basedpyright"] = function()
           require("lspconfig").basedpyright.setup({
             settings = {
@@ -165,6 +174,7 @@ return {
                   diagnosticMode = "openFilesOnly", -- workspace mode is too slow
                   useLibraryCodeForTypes = true,
                   typeCheckingMode = "basic",
+                  disableLanguageServices = false,
                 },
               },
             },

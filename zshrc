@@ -67,7 +67,7 @@ zinit light-mode for \
     OMZP::cp \
     OMZP::asdf \
     OMZL::clipboard.zsh \
-    OMZL::history.zsh \
+    OMZL::history.zsh
 
 zinit ice atload"unalias grv"; zinit snippet OMZP::git
 
@@ -80,6 +80,8 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
 zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 # For postponing loading `fzf`
 zinit ice lucid wait; zinit snippet OMZP::fzf
+
+zinit ice depth=1; zinit light Tarrasch/zsh-autoenv
 
 
 load_completion_with_zinit() {
