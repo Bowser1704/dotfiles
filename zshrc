@@ -4,6 +4,10 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/opt/homebrew/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+export OPENAI_BASE_URL=http://localhost:12001/api/v1
+export ANTHROPIC_BASE_URL=http://localhost:12001/api/v1
+export OPENAI_API_KEY="xxx"
+
 export TERM="xterm-256color"
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
@@ -121,7 +125,14 @@ fi
 
 unfunction _exists
 
-# if [[ -n $TERM ]]; then
-#     alias pbcopy='xargs tmux set-buffer'
-# fi
+# Copies stdin to clipboard using OSC 52 escape sequence
+if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || "$TERM" == "tmux"*) ]]; then
+    # OSC 52 support for non-macOS terminals
+    function clipcopy() {
+      local content_tocopy
+      content_tocopy=$(cat "${1:-/dev/stdin}" | base64 | tr -d '\n')
+      printf "\033]52;c;%s\a" "$content_tocopy" > /dev/tty
+    }
+fi
+
 eval "$(gh copilot alias -- zsh)"
