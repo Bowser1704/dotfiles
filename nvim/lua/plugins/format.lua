@@ -7,7 +7,7 @@ return {
       -- Customize or remove this keymap to your liking
       "<leader>f",
       function()
-        require("conform").format({ async = true, lsp_fallback = true })
+        require("conform").format({ async = false, lsp_fallback = true })
       end,
       mode = "",
       desc = "Format buffer",
@@ -20,7 +20,7 @@ return {
       lua = { "stylua" },
     },
     -- Set up format-on-save
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 1000, lsp_fallback = true },
     -- Customize formatters
     formatters = {
       shfmt = {

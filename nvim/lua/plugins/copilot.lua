@@ -1,19 +1,5 @@
 local M = {}
 
----@param kind string
-function M.pick(kind)
-  return function()
-    local actions = require("CopilotChat.actions")
-    local items = actions[kind .. "_actions"]()
-    if not items then
-      vim.health.warn("No " .. kind .. " found on the current line")
-      return
-    end
-    local ok = pcall(require, "fzf-lua")
-    require("CopilotChat.integrations." .. (ok and "fzflua" or "telescope")).pick(items)
-  end
-end
-
 function M.get_windowcfg(opts)
   -- get lines and columns
   local cl = vim.o.columns
@@ -42,9 +28,10 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "main",
     cmd = "CopilotChat",
+    build = "make tiktoken",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "zbirenbaum/copilot.lua",
+      "ibhagwan/fzf-lua",
     },
     opts = function()
       local user = vim.env.USER or "User"
@@ -93,8 +80,8 @@ return {
       }
     end,
     keys = {
-      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
       {
         "<leader>aa",
         function()
@@ -123,19 +110,25 @@ return {
         mode = { "n", "v" },
       },
       -- Show prompts actions with telescope
-      { "<leader>ap", M.pick("prompt"), desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
+      { "<leader>ap", ":CopilotChatPrompts<CR>", desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
     },
     config = function(_, opts)
-      local chat = require("CopilotChat")
+      require("fzf-lua").register_ui_select()
+
+      local completeopt = vim.opt.completeopt:get()
+      table.insert(completeopt, "noinsert")
+      table.insert(completeopt, "popup")
 
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "copilot-chat",
         callback = function()
           vim.opt_local.relativenumber = false
           vim.opt_local.number = false
+          vim.opt_local.conceallevel = 0
         end,
       })
 
+      local chat = require("CopilotChat")
       chat.setup(opts)
     end,
   },
