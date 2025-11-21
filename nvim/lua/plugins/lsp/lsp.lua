@@ -5,14 +5,10 @@ return {
     version = false, -- last release is way too old
   },
   {
-    "smjonas/inc-rename.nvim",
+    "saecki/live-rename.nvim",
     dependencies = {
       "folke/trouble.nvim",
     },
-    cmd = "IncRename",
-    config = function()
-      require("inc_rename").setup()
-    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -21,9 +17,11 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
-      "nvim-telescope/telescope.nvim",
+      "ibhagwan/fzf-lua",
     },
     config = function(_, _)
+      require("fzf-lua").register_ui_select()
+
       vim.keymap.set("n", "fd", "<cmd>lua vim.diagnostic.open_float()<cr>")
       vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
       vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
@@ -38,18 +36,23 @@ return {
           -- because they only work if you have an active language server
 
           vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-          vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<cr>", opts)
+          vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", opts)
           vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-          vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<cr>", opts)
-          vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", opts)
+          vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", opts)
+          vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts)
           vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
           vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
           vim.keymap.set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-          vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-          -- vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-          vim.keymap.set("n", "<leader>rn", function()
-            return ":IncRename " .. vim.fn.expand("<cword>")
-          end, { expr = true })
+          vim.keymap.set("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", opts)
+          vim.keymap.set(
+            "n",
+            "<leader>rn",
+            require("live-rename").map({ insert = false, cursorpos = -1 }),
+            { desc = "LSP rename" }
+          )
+
+          -- Enable diagnostics by default
+          vim.diagnostic.enable(true, { bufnr = event.buf })
 
           -- vim.keymap.set('n', '<leader>th',
           --   '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) <cr>', opts)
@@ -79,7 +82,8 @@ return {
       -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
       require("mason").setup({})
       require("mason-lspconfig").setup({
-        ensure_installed = { "rust_analyzer" },
+        ensure_installed = { "rust_analyzer", "jsonls" },
+        automatic_enable = { "jsonls", "lua_ls" },
       })
       require("mason-lspconfig").setup_handlers({
         function(server_name)
@@ -176,6 +180,18 @@ return {
                   typeCheckingMode = "basic",
                   disableLanguageServices = false,
                 },
+              },
+            },
+          })
+        end,
+
+        ["jsonls"] = function()
+          require("lspconfig").jsonls.setup({
+            capabilities = lsp_capabilities,
+            settings = {
+              json = {
+                schemas = require("schemastore").json.schemas(),
+                validate = { enable = true },
               },
             },
           })

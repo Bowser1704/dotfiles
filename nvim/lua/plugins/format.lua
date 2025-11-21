@@ -1,6 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
+  event = { "BufReadPre", "BufNewFile", "BufWritePre" },
   cmd = { "ConformInfo" },
   keys = {
     {
@@ -18,6 +18,8 @@ return {
     -- Define your formatters
     formatters_by_ft = {
       lua = { "stylua" },
+      json = { "prettierd", "prettier", fallback = { "jq" } },
+      jsonc = { "prettierd", "prettier", fallback = { "jq" } },
     },
     -- Set up format-on-save
     format_on_save = { timeout_ms = 1000, lsp_fallback = true },
@@ -25,6 +27,13 @@ return {
     formatters = {
       shfmt = {
         prepend_args = { "-i", "2" },
+      },
+      jq = {
+        condition = function(ctx)
+          -- Only use jq for JSON files, not JSONC
+          return ctx.filename:match("%.json$") ~= nil
+        end,
+        prepend_args = { "." },
       },
     },
   },
