@@ -1,4 +1,20 @@
 return {
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "nvim-mini/mini.icons" },
+    opts = {},
+    keys = {
+      { "<leader>fb", "<cmd>FzfLua builtin<cr>", desc = "fzflua builtin commands" },
+      { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files (root dir)" },
+      { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "live grep" },
+      { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
+      { "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Status" },
+      { "<leader>gb", "<cmd>FzfLua git_blame<CR>", desc = "Git Blame" },
+    },
+  },
   -- add extra telescope keymaps
   {
     "nvim-telescope/telescope.nvim",
@@ -76,9 +92,6 @@ return {
     keys = {
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       -- find
-      { "<leader>fg", "<cmd>Telescope live_grep_args<cr>", desc = "live grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
       { "<leader>hh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
       { "<leader>fn", "<cmd>Telescope noice<cr>", desc = "Find Noice" },
       { "<leader>ft", "<cmd>Telescope file_browser<cr>", desc = "File Browsers" },
@@ -90,8 +103,6 @@ return {
         desc = "Find Plugin File",
       },
       -- git
-      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
-      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
       -- search
       { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },

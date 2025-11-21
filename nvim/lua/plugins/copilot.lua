@@ -115,10 +115,6 @@ return {
     config = function(_, opts)
       require("fzf-lua").register_ui_select()
 
-      local completeopt = vim.opt.completeopt:get()
-      table.insert(completeopt, "noinsert")
-      table.insert(completeopt, "popup")
-
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "copilot-chat",
         callback = function()

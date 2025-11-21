@@ -112,7 +112,7 @@ _exists ag      && alias grep='ag'
 _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie' && compdef _curl curlie
 _exists delta   && alias diff='delta'
-_exists difft   && alias diff='difft'
+_exists difft   && alias diff='difft' && export KUBECTL_EXTERNAL_DIFF="difft"
 # _exists kubectl && load_completion_with_zinit kubectl
 
 if _exists nvim; then
