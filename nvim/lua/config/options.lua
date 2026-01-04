@@ -10,6 +10,7 @@ vim.g.have_nerd_font = true
 
 local opt = vim.opt
 
+opt.laststatus = 3 -- avante recommended style avante.nvim
 opt.clipboard = "" -- unnamed means primary clipboard (unnamedstar register)
 opt.cc = "160" -- set an 160 column border for good coding style
 opt.mouse = "vc" -- Enable mouse to copy

@@ -58,127 +58,87 @@ return {
         end,
       })
 
-      local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+      vim.lsp.config.gopls = {
+        filetypes = { "go", "gotempl", "gowork", "gomod" },
+        root_markers = { ".git", "go.mod", "go.work", vim.uv.cwd() },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+            ["ui.inlayhint.hints"] = {
+              assignVariableTypes = true,
+              functionTypeParameters = true,
+              compositeLiteralFields = true,
+              constantValues = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      }
+
+      -- Lua {{{
+      vim.lsp.config.lua_ls = {
+        cmd = { "lua-language-server" },
+        filetypes = { "lua" },
+        root_markers = { ".luarc.json", ".git", vim.uv.cwd() },
+        settings = {
+          Lua = {
+            telemetry = {
+              enable = false,
+            },
+            hint = { enable = true },
+          },
+        },
+      }
+
+      vim.lsp.config.basedpyright = {
+        name = "basedpyright",
+        filetypes = { "python" },
+        cmd = { "basedpyright-langserver", "--stdio" },
+        settings = {
+          python = {
+            venvPath = vim.fn.expand("~") .. "/.virtualenvs",
+          },
+          basedpyright = {
+            disableOrganizeImports = true,
+            analysis = {
+              autoSearchPaths = true,
+              autoImportCompletions = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly",
+              typeCheckingMode = "strict",
+              inlayHints = {
+                variableTypes = true,
+                callArgumentNames = true,
+                functionReturnTypes = true,
+                genericTypes = false,
+              },
+            },
+          },
+        },
+      }
+
+      vim.lsp.config.jsonls = {
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      }
+
+      vim.lsp.enable("gopls")
+
       -- to learn how to use mason.nvim
       -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
       require("mason").setup({})
       require("mason-lspconfig").setup({
-        ensure_installed = { "rust_analyzer", "jsonls" },
-        automatic_enable = { "jsonls", "lua_ls" },
-      })
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            capabilities = lsp_capabilities,
-          })
-        end,
-
-        ["lua_ls"] = function()
-          require("lspconfig").lua_ls.setup({
-            on_init = function(client)
-              local path = client.workspace_folders[1].name
-              if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
-                return
-              end
-
-              client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-                runtime = {
-                  -- Tell the language server which version of Lua you're using
-                  -- (most likely LuaJIT in the case of Neovim)
-                  version = "LuaJIT",
-                },
-                -- Make the server aware of Neovim runtime files
-                workspace = {
-                  checkThirdParty = false,
-                  library = {
-                    vim.env.VIMRUNTIME,
-                  },
-                },
-              })
-            end,
-            settings = {
-              Lua = {
-                hint = { enable = true },
-              },
-            },
-          })
-        end,
-
-        ["gopls"] = function()
-          require("lspconfig").gopls.setup({
-            filetypes = { "go", "gomod", "gotmpl", "helm" },
-            settings = {
-              gopls = {
-                usePlaceholders = false,
-                gofumpt = true,
-                templateExtensions = { "tpl", "yaml" },
-                codelenses = {
-                  generate = true,
-                  test = true,
-                  tidy = true,
-                  upgrade_dependency = true,
-                },
-                analyses = {
-                  fieldaligment = true,
-                  nilness = true,
-                  shadow = true,
-                  unusedwrite = true,
-                },
-                hints = {
-                  assignVariableTypes = true,
-                  compositeLiteralFields = true,
-                  constantValues = true,
-                  functionTypeParameters = true,
-                  parameterNames = true,
-                  rangeVariableTypes = true,
-                },
-              },
-            },
-          })
-        end,
-
-        ["clangd"] = function()
-          require("lspconfig").clangd.setup({
-            filetypes = { "c", "cpp", "objc", "objcpp" },
-          })
-        end,
-
-        ["ruff"] = function()
-          require("lspconfig").ruff.setup({
-            init_options = {
-              lint = { enable = false },
-              format = { enable = true },
-            },
-          })
-        end,
-
-        ["basedpyright"] = function()
-          require("lspconfig").basedpyright.setup({
-            settings = {
-              basedpyright = {
-                analysis = {
-                  autoSearchPaths = true,
-                  diagnosticMode = "openFilesOnly", -- workspace mode is too slow
-                  useLibraryCodeForTypes = true,
-                  typeCheckingMode = "basic",
-                  disableLanguageServices = false,
-                },
-              },
-            },
-          })
-        end,
-
-        ["jsonls"] = function()
-          require("lspconfig").jsonls.setup({
-            capabilities = lsp_capabilities,
-            settings = {
-              json = {
-                schemas = require("schemastore").json.schemas(),
-                validate = { enable = true },
-              },
-            },
-          })
-        end,
+        ensure_installed = { "rust_analyzer", "jsonls", "gopls" },
+        automatic_enable = { "jsonls", "lua_ls", "gopls" },
       })
     end,
   },
