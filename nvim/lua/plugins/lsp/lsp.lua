@@ -51,8 +51,8 @@ return {
             { desc = "LSP rename" }
           )
 
-          -- Enable diagnostics by default
-          vim.diagnostic.enable(true, { bufnr = event.buf })
+          -- Enable diagnostics by default (they are enabled by default in v0.11+)
+          -- No action needed as diagnostics are enabled by default
 
           -- vim.keymap.set('n', '<leader>th',
           --   '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) <cr>', opts)
@@ -96,7 +96,7 @@ return {
           require("lspconfig").lua_ls.setup({
             on_init = function(client)
               local path = client.workspace_folders[1].name
-              if vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+              if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
                 return
               end
 
