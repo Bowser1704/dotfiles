@@ -11,6 +11,11 @@ return {
     },
   },
   {
+    "chrisgrieser/nvim-lsp-endhints",
+    event = "LspAttach",
+    opts = {}, -- required, even if empty
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPost", "BufNewFile", "BufEnter" },
     dependencies = {
@@ -50,32 +55,8 @@ return {
             require("live-rename").map({ insert = false, cursorpos = -1 }),
             { desc = "LSP rename" }
           )
-
-          -- Enable diagnostics by default (they are enabled by default in v0.11+)
-          -- No action needed as diagnostics are enabled by default
-
-          -- vim.keymap.set('n', '<leader>th',
-          --   '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) <cr>', opts)
         end,
       })
-
-      -- default lsp inlayhints is ugly
-      -- vim.api.nvim_create_autocmd("LspAttach", {
-      --   desc = "lsp inlayhints",
-      --   callback = function(args)
-      --     if not (args.data and args.data.client_id) then
-      --       return
-      --     end
-      --
-      --     local client = vim.lsp.get_client_by_id(args.data.client_id)
-      --
-      --     if client and client.name == "rust_analyzer" then
-      --       vim.lsp.inlay_hint.enable(false)
-      --       return
-      --     end
-      --     vim.lsp.inlay_hint.enable(true)
-      --   end,
-      -- })
 
       local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- to learn how to use mason.nvim
@@ -116,7 +97,9 @@ return {
               })
             end,
             settings = {
-              Lua = {},
+              Lua = {
+                hint = { enable = true },
+              },
             },
           })
         end,
