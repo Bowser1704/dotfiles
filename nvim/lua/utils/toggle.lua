@@ -43,8 +43,8 @@ local enabled = true
 function M.diagnostics()
   -- if this Neovim version supports checking if diagnostics are enabled
   -- then use that for the current state
-  if vim.diagnostic.is_disabled then
-    enabled = not vim.diagnostic.is_disabled()
+  if vim.diagnostic.is_enabled then
+    enabled = vim.diagnostic.is_enabled()
   end
   enabled = not enabled
 
@@ -52,7 +52,7 @@ function M.diagnostics()
     vim.diagnostic.enable()
     LazyVim.info("Enabled diagnostics", { title = "Diagnostics" })
   else
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false)
     LazyVim.warn("Disabled diagnostics", { title = "Diagnostics" })
   end
 end
@@ -60,12 +60,12 @@ end
 ---@param buf? number
 ---@param value? boolean
 function M.inlay_hints(buf, value)
-  local ih = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
+  local ih = vim.lsp.inlay_hint
   if type(ih) == "function" then
     ih(buf, value)
   elseif type(ih) == "table" and ih.enable then
     if value == nil then
-      value = not ih.is_enabled(buf)
+      value = not ih.is_enabled({ bufnr = buf })
     end
     ih.enable(value, { bufnr = buf })
   end
