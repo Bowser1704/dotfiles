@@ -1,6 +1,6 @@
-nodejs 21.6.2
+nodejs 24.12.0
 golang 1.24.6
-neovim 0.10.0
+neovim 0.11.5
 python 3.11.8
 kubectl 1.29.3
 k9s 0.50.9
@@ -9,7 +9,7 @@ lazygit 0.41.0
 krew 0.4.4
 yq 4.43.1
 exa 0.10.1
-fzf 0.52.1
+fzf 0.65.1
 difftastic 0.58.0
 helm 3.15.0
 terraform 1.8.3
@@ -21,3 +21,5 @@ stern 1.32.0
 pdm 2.19.3
 pre-commit 4.2.0
 hey 0.1.4
+maven 3.2.5
+java openjdk-18.0.2.1

@@ -13,6 +13,14 @@ return {
       nls.setup({
         update_in_insert = true,
         debug = true,
+                -- Add explicit on_attach function for Neovim 0.11.5 compatibility
+        on_attach = function(client, _)
+          -- Disable formatting capability to avoid conflicts with conform.nvim
+          if client.server_capabilities then
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end
+        end,
       })
 
       require("mason-null-ls").setup({
