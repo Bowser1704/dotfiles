@@ -123,8 +123,6 @@ return {
           },
         },
       }
-      vim.lsp.enable("basedpyright")
-
       vim.lsp.config.jsonls = {
         settings = {
           json = {
@@ -134,14 +132,34 @@ return {
         },
       }
 
-      vim.lsp.enable("gopls")
+      local vue_language_server_path = vim.fn.stdpath("data")
+        .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+      local tsserver_filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" }
+      local vue_plugin = {
+        name = "@vue/typescript-plugin",
+        location = vue_language_server_path,
+        languages = { "vue" },
+        configNamespace = "typescript",
+      }
+      local vtsls_config = {
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                vue_plugin,
+              },
+            },
+          },
+        },
+        filetypes = tsserver_filetypes,
+      }
+      vim.lsp.config("vtsls", vtsls_config)
 
       -- to learn how to use mason.nvim
       -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
       require("mason").setup({})
       require("mason-lspconfig").setup({
         ensure_installed = { "rust_analyzer", "jsonls", "gopls" },
-        automatic_enable = { "jsonls", "lua_ls", "gopls" },
       })
     end,
   },
