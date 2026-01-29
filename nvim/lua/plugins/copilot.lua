@@ -25,9 +25,27 @@ end
 
 return {
   {
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+    config = function()
+      require("mcphub").setup({
+        extensions = {
+          copilotchat = {
+            enabled = true,
+            convert_tools_to_functions = true, -- Convert MCP tools to CopilotChat functions
+            convert_resources_to_functions = true, -- Convert MCP resources to CopilotChat functions
+            add_mcp_prefix = false, -- Add "mcp_" prefix to function names
+          },
+        },
+      })
+    end,
+  },
+  {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "main",
-    cmd = "CopilotChat",
     build = "make tiktoken",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -113,7 +131,7 @@ return {
       { "<leader>ap", ":CopilotChatPrompts<CR>", desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
     },
     config = function(_, opts)
-      require("fzf-lua").register_ui_select()
+      -- require("fzf-lua").register_ui_select()
 
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "copilot-chat",

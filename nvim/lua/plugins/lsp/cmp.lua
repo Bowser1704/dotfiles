@@ -75,7 +75,7 @@ return {
       local cmp = require("cmp")
       return {
         completion = {
-          completeopt = "menu,menuone,noselect",
+          completeopt = "menu,menuone,noselect,popup",
         },
         snippet = {
           expand = function(args)
