@@ -16,3 +16,5 @@
     ~/.config/rofi: rofi
     ~/.config/polybar: polybar
     ~/.config/fontconfig: fontconfig
+    ~/.config/opencode/config.json: opencode/config.json
+    ~/.config/opencode/agent: opencode/agent
