@@ -102,6 +102,7 @@ load_completion_with_zinit() {
 
 _exists() { (( $+commands[$1])) }
 _exists exa     && alias ls='exa --icons' && alias ll='ls -lh'
+_exists eza     && alias ls='eza --icons' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
 _exists batcat  && alias cat='batcat'
@@ -134,5 +135,3 @@ if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || 
       printf "\033]52;c;%s\a" "$content_tocopy" > /dev/tty
     }
 fi
-
-eval "$(gh copilot alias -- zsh)"
