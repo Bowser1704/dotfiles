@@ -1,0 +1,28 @@
+# Base tools
+git
+curl
+wget
+build-essential
+pkg-config
+
+# Development dependencies (required for asdf tools)
+libssl-dev
+libreadline-dev
+zlib1g-dev
+libffi-dev
+libbz2-dev
+libsqlite3-dev
+libncurses5-dev
+libncursesw5-dev
+libgmp-dev
+autoconf
+
+# Shell
+zsh
+
+# User management
+sudo
+
+# Misc
+unzip
+ca-certificates

@@ -4,13 +4,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/opt/homebrew/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-export OPENAI_BASE_URL=http://localhost:12001/api/v1
-export ANTHROPIC_BASE_URL=http://localhost:12001/api/v1
-export OPENAI_API_KEY="xxx"
-
 export TERM="xterm-256color"
-export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
-export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
@@ -101,7 +95,7 @@ load_completion_with_zinit() {
 }
 
 _exists() { (( $+commands[$1])) }
-_exists exa     && alias ls='exa --icons' && alias ll='ls -lh'
+_exists lsd     && alias ls='lsd' && alias ll='ls -lh'
 _exists eza     && alias ls='eza --icons' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
