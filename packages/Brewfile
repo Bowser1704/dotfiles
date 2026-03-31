@@ -1,0 +1,62 @@
+# ============================================
+# Shell & Terminal
+# ============================================
+brew "zsh"
+brew "zsh-completions"
+brew "tmux"
+brew "zellij"
+brew "fzf"
+
+# ============================================
+# Editor
+# ============================================
+brew "neovim"
+
+# ============================================
+# Languages & Runtimes
+# ============================================
+brew "node"
+brew "go"
+brew "python@3.11"
+
+# ============================================
+# Development Tools
+# ============================================
+# Version control
+brew "git"
+brew "gh"
+brew "lazygit"
+brew "delta"
+brew "direnv"
+brew "pre-commit"
+
+# CLI utilities
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "lsd"
+brew "yq"
+
+# ============================================
+# Kubernetes & DevOps
+# ============================================
+brew "kubectl"
+brew "k9s"
+brew "helm"
+brew "stern"
+brew "terraform"
+brew "argocd"
+
+# ============================================
+# Fonts
+# ============================================
+cask "font-hack-nerd-font"
+
+# ============================================
+# Optional GUI Apps (uncomment to enable)
+# ============================================
+# cask "visual-studio-code"
+# cask "alacritty"
+cask "ghostty"
+cask "rectangle"
+cask "flashspace"

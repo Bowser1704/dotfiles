@@ -1,7 +1,10 @@
 - defaults:
     link:
       relink: true
+
 - clean: ["~"]
+
+# Common configurations (both Linux and macOS)
 - link:
     ~/.tool-versions: tool-versions
     ~/.config/nvim: nvim
@@ -11,10 +14,14 @@
     ~/.stylua.toml: stylua.toml
     ~/.config/alacritty: alacritty
     ~/.config/zellij: zellij
+    ~/.config/fontconfig: fontconfig
+    ~/.config/ghostty: ghostty
+    ~/.config/flashspace: flashspace
+
+# Linux-only configurations (bspwm, sxhkd, polybar, rofi)
+- link:
     ~/.config/bspwm: bspwm
     ~/.config/sxhkd: sxhkd
     ~/.config/rofi: rofi
     ~/.config/polybar: polybar
-    ~/.config/fontconfig: fontconfig
-    ~/.config/ghostty: ghostty
-    ~/.config/flashspace: flashspace
+  if: '[ "$(uname -s)" = "Linux" ]'
