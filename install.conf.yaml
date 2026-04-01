@@ -4,24 +4,36 @@
 
 - clean: ["~"]
 
-# Common configurations (both Linux and macOS)
+# Tools configurations (cross-platform CLI tools)
 - link:
-    ~/.tool-versions: tool-versions
-    ~/.config/nvim: nvim
-    ~/.tmux.conf: tmux.conf
-    ~/.zshrc: zshrc
-    ~/.ruff.toml: ruff.toml
-    ~/.stylua.toml: stylua.toml
-    ~/.config/alacritty: alacritty
-    ~/.config/zellij: zellij
-    ~/.config/fontconfig: fontconfig
-    ~/.config/ghostty: ghostty
-    ~/.config/flashspace: flashspace
+    ~/.tool-versions: tools/tool-versions
+    ~/.config/nvim: tools/nvim
+    ~/.tmux.conf: tools/tmux.conf
+    ~/.zshrc: tools/zshrc
+    ~/.stylua.toml: tools/stylua.toml
+    ~/.config/fontconfig: tools/fontconfig
 
-# Linux-only configurations (bspwm, sxhkd, polybar, rofi)
+# macOS GUI configurations (ghostty)
 - link:
-    ~/.config/bspwm: bspwm
-    ~/.config/sxhkd: sxhkd
-    ~/.config/rofi: rofi
-    ~/.config/polybar: polybar
-  if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/ghostty:
+      path: default-gui/ghostty
+      if: '[ "$(uname -s)" = "Darwin" ]'
+
+# Linux GUI configurations (ghostty, bspwm, sxhkd, polybar, rofi)
+# Only linked when a display server is available (not on headless servers)
+- link:
+    ~/.config/ghostty:
+      path: default-gui/ghostty
+      if: '[ "$(uname -s)" = "Linux" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }'
+    ~/.config/bspwm:
+      path: linux-gui/bspwm
+      if: '[ "$(uname -s)" = "Linux" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }'
+    ~/.config/sxhkd:
+      path: linux-gui/sxhkd
+      if: '[ "$(uname -s)" = "Linux" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }'
+    ~/.config/rofi:
+      path: linux-gui/rofi
+      if: '[ "$(uname -s)" = "Linux" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }'
+    ~/.config/polybar:
+      path: linux-gui/polybar
+      if: '[ "$(uname -s)" = "Linux" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }'

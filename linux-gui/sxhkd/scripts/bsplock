@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+i3lock \
+	--pass-media-keys \
+	--pass-screen-keys \
+	--pass-power-keys \
+	--pass-volume-keys \
+	--image="$(dirname "$0")/lone.jpg" \
+	--bar-indicator \
+	--date-size=24 \
+	--force-clock \
+	--ignore-empty-password

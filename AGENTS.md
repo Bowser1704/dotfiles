@@ -25,18 +25,26 @@ A `bootstrap` script is provided for one-click setup on new machines, handling s
 │   ├── setup-shell.sh     # Shell configuration script
 │   ├── post-install.sh    # Post-installation setup
 │   └── yank               # Clipboard helper
-├── nvim/                  # Neovim configuration
-├── zshrc                  # Zsh shell configuration
-├── tmux.conf              # Tmux terminal multiplexer configuration
-├── tool-versions          # asdf version manager configuration
-├── alacritty/             # Alacritty terminal emulator configuration
-├── zellij/                # Zellij terminal multiplexer configuration
-├── bspwm/                 # bspwm window manager configuration (Linux only)
-├── sxhkd/                 # Simple X hotkey daemon configuration (Linux only)
-├── polybar/               # Polybar status bar configuration (Linux only)
-├── rofi/                  # Rofi application launcher configuration (Linux only)
-├── fontconfig/            # Font configuration
-└── ...
+├── tools/                 # Cross-platform CLI tools configuration
+│   ├── nvim/              # Neovim configuration
+│   ├── zshrc              # Zsh shell configuration
+│   ├── tmux.conf          # Tmux terminal multiplexer configuration
+│   ├── tool-versions      # asdf version manager configuration
+│   ├── stylua.toml        # Lua formatter configuration
+│   └── fontconfig/        # Font configuration
+├── default-gui/           # Default GUI tools (both platforms)
+│   └── ghostty/           # Ghostty terminal emulator configuration
+├── linux-gui/             # Linux-only GUI configurations
+│   ├── bspwm/             # bspwm window manager configuration
+│   ├── sxhkd/             # Simple X hotkey daemon configuration
+│   ├── polybar/           # Polybar status bar configuration
+│   └── rofi/              # Rofi application launcher configuration
+├── macos-gui/             # macOS-only GUI configurations (reserved)
+├── deprecated/            # Deprecated configurations (not linked)
+│   ├── alacritty/         # Old Alacritty config
+│   ├── zellij/            # Old Zellij config
+│   └── opencode/          # Old OpenCode config
+└── dotbot/                # Dotbot submodule
 ```
 
 ## Installation
@@ -120,8 +128,8 @@ By default, the script uses `https://gh-proxy.org/` as a proxy for GitHub URLs t
 
 | Platform | System Packages | Tool Management | GUI Tools | User Creation |
 |----------|-----------------|-----------------|-----------|---------------|
-| Ubuntu   | apt (build deps) | asdf | ❌ No | ✅ Yes (if root) |
-| macOS    | Homebrew | Homebrew | ✅ Optional | ❌ No |
+| Ubuntu   | apt (build deps) | asdf | bspwm, ghostty | Yes (if root) |
+| macOS    | Homebrew | Homebrew | ghostty, rectangle, flashspace | No |
 
 ### Ubuntu Package Strategy
 
@@ -130,9 +138,18 @@ On Ubuntu, the bootstrap script:
 - Uses **asdf** for all development tools (nodejs, go, python, kubectl, neovim, etc.)
 - This ensures consistent tool versions across different Ubuntu releases
 
+### Smart GUI Configuration Linking
+
+GUI configurations are linked intelligently based on the environment:
+
+- **tools/** - Cross-platform CLI tools, always linked
+- **default-gui/ghostty** - Linked on both macOS and Linux (with display server)
+- **linux-gui/** - Only linked on Linux when a display server is available (`$DISPLAY` or `$WAYLAND_DISPLAY`)
+- This prevents linking GUI configs on headless servers
+
 ### Linux-specific Configurations
 
-The following configurations are only linked on Linux:
+The following configurations are only linked on Linux with a display server:
 - `~/.config/bspwm` - Window manager
 - `~/.config/sxhkd` - Hotkey daemon
 - `~/.config/polybar` - Status bar
@@ -144,7 +161,7 @@ The following configurations are only linked on Linux:
 
 - **Shell**: Zsh with Zinit as plugin manager
 - **Prompt**: Powerlevel10k theme
-- **Plugins**: 
+- **Plugins**:
   - fast-syntax-highlighting
   - zsh-autosuggestions
   - zsh-completions
@@ -153,8 +170,8 @@ The following configurations are only linked on Linux:
   - fzf integration
   - zsh-vi-mode
   - asdf integration
-- **Aliases**: Various aliases for modern tools like `eza` (as `ls`), `batcat` (as `cat`), `fd` (as `find`), etc.
-- **Environment**: Uses asdf for managing multiple versions of programming languages and tools
+- **Aliases**: Various aliases for modern tools like `eza` (as `ls`), `bat` (as `cat`), `fd` (as `find`), etc.
+- **Environment**: Uses asdf (Linux) or Homebrew (macOS) for managing multiple versions of programming languages and tools
 
 ### Terminal Multiplexer (Tmux)
 
@@ -166,7 +183,7 @@ The following configurations are only linked on Linux:
   - tmux-network-bandwidth
   - tmux-mem-cpu-load
   - tmux-resurrect
-- **Features**: 
+- **Features**:
   - Vi-style key bindings for copy mode
   - Custom status bar with system resource monitoring
   - Automatic restoration of sessions
@@ -177,12 +194,18 @@ The following configurations are only linked on Linux:
 - **Hotkey Daemon**: sxhkd for key bindings
 - **Status Bar**: Polybar
 - **Key Bindings** (Super key as main modifier):
-  - `Super + Enter`: Launch terminal (Alacritty)
+  - `Super + Enter`: Launch terminal (Ghostty)
   - `Super + Space`: Application launcher (Rofi)
   - `Super + h/j/k/l`: Focus windows in direction
   - `Super + Shift + h/j/k/l`: Move windows in direction
   - `Super + 1-9`: Switch to desktop 1-9
   - `Super + Shift + 1-9`: Move window to desktop 1-9
+
+### Terminal Emulator (Ghostty)
+
+- **Configuration**: Located in `default-gui/ghostty/` directory
+- **Features**: Fast, cross-platform terminal emulator with GPU acceleration
+- **Platform**: Available on both macOS and Linux
 
 ### Text Editor (Neovim)
 
@@ -207,12 +230,9 @@ The following configurations are only linked on Linux:
   - Neovim: 0.11.5
   - Python: 3.11.8
   - kubectl: 1.29.3
-  - And many more (see tool-versions file)
-
-### Terminal Emulator (Alacritty)
-
-- **Configuration**: Located in `alacritty/` directory
-- **Features**: Fast, cross-platform terminal emulator
+  - k9s: 0.50.9
+  - terraform: 1.8.3
+  - And many more (see tools/tool-versions file)
 
 ## Key Scripts
 
@@ -221,17 +241,17 @@ The following configurations are only linked on Linux:
 - `scripts/setup-shell.sh`: Configures zsh as default shell, installs TPM
 - `scripts/post-install.sh`: Post-installation setup (Neovim plugins, directories)
 - `scripts/yank`: Handles copying to clipboard using OSC 52 escape sequences
-- `bspwm/bspwmrc`: bspwm startup script that configures monitors, rules, and starts related services
-- `sxhkd/sxhkdrc`: Key bindings for the system
+- `linux-gui/bspwm/bspwmrc`: bspwm startup script that configures monitors, rules, and starts related services
+- `linux-gui/sxhkd/sxhkdrc`: Key bindings for the system
 
 ## Configuration Files
 
 - `install.conf.yaml`: Defines which files/directories should be symlinked where
-- `zshrc`: Comprehensive shell configuration with plugin management
-- `tmux.conf`: Tmux configuration with plugins and custom key bindings
-- `tool-versions`: Defines default versions for development tools managed by asdf
+- `tools/zshrc`: Comprehensive shell configuration with plugin management
+- `tools/tmux.conf`: Tmux configuration with plugins and custom key bindings
+- `tools/tool-versions`: Defines default versions for development tools managed by asdf
 - `packages/Brewfile`: macOS Homebrew package list
-- `packages/apt-packages.txt`: Ubuntu apt package list
+- `packages/apt-packages.txt`: Ubuntu apt package list (build dependencies only)
 
 ## Development Workflows
 
@@ -243,9 +263,10 @@ The dotfiles provide a consistent development environment across machines with:
 - Terminal multiplexing with Tmux
 - Modern text editing with Neovim and LSP support
 - Tiling window management with bspwm (Linux only)
+- Ghostty terminal emulator on both platforms
 
 ### Code Formatting and Linting
-- Lua: stylua (configured in stylua.toml)
+- Lua: stylua (configured in tools/stylua.toml)
 - Python: ruff (LSP integration in Neovim)
 - Other languages: Various LSP servers managed by mason.nvim
 
@@ -258,16 +279,19 @@ The dotfiles provide a consistent development environment across machines with:
 
 2. **Customization**: The configurations are tailored to the original author's workflow and preferences. New users may need to adjust:
    - Key bindings in sxhkd
-   - Visual themes in Neovim, Alacritty, Polybar
+   - Visual themes in Neovim, Ghostty, Polybar
    - Shell aliases and functions
    - Development tools in tool-versions or Brewfile
 
-3. **Security**: The zshrc file contains placeholder API keys that should be updated or removed:
-   - `OPENAI_API_KEY="xxx"`
-
-4. **Platform Specific**: 
-   - Linux-specific configs (bspwm, sxhkd, polybar, rofi) are only linked on Linux
+3. **Platform Specific**:
+   - Linux-specific configs (bspwm, sxhkd, polybar, rofi) are only linked on Linux with a display server
    - macOS uses Homebrew instead of asdf for tool management
+   - Ghostty is the default terminal on both platforms
+
+4. **Deprecated Configurations**: The `deprecated/` directory contains old configurations that are no longer linked:
+   - Alacritty (replaced by Ghostty)
+   - Zellij (no longer used)
+   - OpenCode (no longer used)
 
 ## Troubleshooting
 
@@ -277,10 +301,12 @@ The dotfiles provide a consistent development environment across machines with:
 - For key bindings not working, verify sxhkd is running (`pgrep sxhkd`)
 - For terminal colors not appearing correctly, check terminal emulator compatibility
 - On macOS, if Homebrew packages fail, try `brew doctor`
+- For GUI configs not linking on Linux, ensure `$DISPLAY` or `$WAYLAND_DISPLAY` is set
 
 ## Maintenance
 
 - To update plugins: Use the respective plugin managers (zinit for zsh, lazy.nvim for neovim)
 - To add new dotfiles: Update install.conf.yaml with the new file mapping
-- To update tool versions: Modify the tool-versions file (Linux) or Brewfile (macOS)
+- To update tool versions: Modify tools/tool-versions (Linux) or packages/Brewfile (macOS)
 - To add new system packages: Update packages/apt-packages.txt or packages/Brewfile
+- Deprecated configs can be safely removed from `deprecated/` directory if no longer needed

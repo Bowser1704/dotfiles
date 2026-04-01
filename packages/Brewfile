@@ -4,7 +4,6 @@
 brew "zsh"
 brew "zsh-completions"
 brew "tmux"
-brew "zellij"
 brew "fzf"
 
 # ============================================
@@ -36,16 +35,12 @@ brew "fd"
 brew "bat"
 brew "lsd"
 brew "yq"
+brew "jq"
 
 # ============================================
 # Kubernetes & DevOps
 # ============================================
 brew "kubectl"
-brew "k9s"
-brew "helm"
-brew "stern"
-brew "terraform"
-brew "argocd"
 
 # ============================================
 # Fonts
