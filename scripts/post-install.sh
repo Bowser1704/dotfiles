@@ -1,10 +1,33 @@
 #!/usr/bin/env bash
 # Post-installation setup
-# Usage: ./scripts/post-install.sh
+# Usage: ./scripts/post-install.sh [--install-tmux-plugins]
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INSTALL_TMUX_PLUGINS=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --install-tmux-plugins|-t)
+            INSTALL_TMUX_PLUGINS=true
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $(basename "$0") [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  -t, --install-tmux-plugins  Install tmux plugins via TPM"
+            echo "  -h, --help                  Show this help message"
+            exit 0
+            ;;
+        *)
+            warn "Unknown option: $1"
+            shift
+            ;;
+    esac
+done
 
 # Source common functions
 source "$SCRIPT_DIR/../lib/common.sh"
@@ -35,6 +58,31 @@ setup_zinit() {
     fi
 
     info "Zinit will install plugins on first shell launch"
+}
+
+# Install tmux plugins via TPM
+setup_tmux_plugins() {
+    local tpm_path="$HOME/.tmux/plugins/tpm"
+
+    if ! command_exists tmux; then
+        warn "tmux not found, skipping plugin installation"
+        return 0
+    fi
+
+    if [ ! -d "$tpm_path" ]; then
+        warn "TPM not found at $tpm_path, skipping plugin installation"
+        return 0
+    fi
+
+    info "Installing tmux plugins via TPM..."
+
+    # Run TPM install script
+    "$tpm_path/bin/install_plugins" 2>/dev/null || {
+        warn "Failed to install some tmux plugins"
+        return 0
+    }
+
+    success "Tmux plugins installed"
 }
 
 # Setup fzf
@@ -68,10 +116,16 @@ setup_neovim
 setup_fzf
 setup_zinit
 
+if [ "$INSTALL_TMUX_PLUGINS" = true ]; then
+    setup_tmux_plugins
+fi
+
 echo ""
 success "Post-installation complete!"
 echo ""
 info "Next steps:"
 echo "  1. Restart your terminal or run: exec zsh"
-echo "  2. (Tmux) Press prefix + I to install plugins"
+if [ "$INSTALL_TMUX_PLUGINS" != true ]; then
+    echo "  2. (Tmux) Press prefix + I to install plugins, or run: $0 --install-tmux-plugins"
+fi
 echo "  3. (Neovim) Run :checkhealth to verify setup"

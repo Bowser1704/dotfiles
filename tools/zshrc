@@ -15,6 +15,11 @@ export TERM="xterm-256color"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Custom completion directory
+ZSH_COMP_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions"
+[[ -d "$ZSH_COMP_DIR" ]] || mkdir -p "$ZSH_COMP_DIR"
+fpath=("$ZSH_COMP_DIR" $fpath)
+
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
@@ -136,3 +141,17 @@ if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || 
       printf "\033]52;c;%s\a" "$content_tocopy" > /dev/tty
     }
 fi
+
+# Auto-generate completions for installed tools
+_ensure_completion() {
+  local cmd="$1" generator="$2"
+  local comp_file="$ZSH_COMP_DIR/_$cmd"
+  (( $+commands[$cmd] )) && [[ ! -f "$comp_file" ]] && eval "$generator > $comp_file" 2>/dev/null
+}
+
+_ensure_completion kubectl  "kubectl completion zsh"
+_ensure_completion helm     "helm completion zsh"
+_ensure_completion gh       "gh completion -s zsh"
+_ensure_completion uv       "uv generate-shell-completion zsh"
+
+unfunction _ensure_completion
