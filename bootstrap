@@ -5,15 +5,16 @@
 #   or:  ./bootstrap [options]
 #
 # Options:
-#   -h, --help          Show this help message
-#   --no-root           Skip operations requiring root/sudo
-#   --skip-packages     Skip system package installation
-#   --skip-asdf         Skip asdf installation (Linux only)
-#   --skip-shell        Skip shell configuration
-#   --skip-user-create  Skip user creation (used internally)
-#   --proxy URL         Use proxy for GitHub (default: https://gh-proxy.org/)
-#   --no-proxy          Disable GitHub proxy
-#   --dry-run           Show what would be done without executing
+#   -h, --help              Show this help message
+#   --no-root               Skip operations requiring root/sudo
+#   --skip-packages         Skip system package installation
+#   --skip-asdf             Skip asdf installation (Linux only)
+#   --skip-shell            Skip shell configuration
+#   --skip-user-create      Skip user creation (used internally)
+#   --install-tmux-plugins  Install tmux plugins via TPM
+#   --proxy URL             Use proxy for GitHub (default: https://gh-proxy.org/)
+#   --no-proxy              Disable GitHub proxy
+#   --dry-run               Show what would be done without executing
 #
 
 set -e
@@ -31,6 +32,7 @@ SKIP_PACKAGES=false
 SKIP_ASDF=false
 SKIP_SHELL=false
 SKIP_USER_CREATE=false
+INSTALL_TMUX_PLUGINS=false
 DRY_RUN=false
 NEW_USER=""
 ASDF_PROXY="${ASDF_GITHUB_PROXY:-https://gh-proxy.org/}"
@@ -60,6 +62,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --skip-user-create)
             SKIP_USER_CREATE=true
+            shift
+            ;;
+        --install-tmux-plugins|-t)
+            INSTALL_TMUX_PLUGINS=true
             shift
             ;;
         --proxy)
@@ -261,7 +267,9 @@ switch_user_and_run() {
         # Run bootstrap as new user
         local proxy_args=""
         [ -n "$ASDF_PROXY" ] && proxy_args="--proxy $ASDF_PROXY"
-        exec su - "$NEW_USER" -c "cd $user_home/.dotfiles && ./bootstrap --skip-user-create $proxy_args"
+        local tmux_args=""
+        [ "$INSTALL_TMUX_PLUGINS" = true ] && tmux_args="--install-tmux-plugins"
+        exec su - "$NEW_USER" -c "cd $user_home/.dotfiles && ./bootstrap --skip-user-create $proxy_args $tmux_args"
     fi
 }
 
@@ -378,17 +386,12 @@ run_dotbot() {
 post_install() {
     info "Running post-installation..."
 
-    # Create directories
-    mkdir -p "$HOME/.local/bin"
-    mkdir -p "$HOME/.local/share"
-
-    # Install Neovim plugins if available
-    if command -v nvim &> /dev/null; then
-        info "Installing Neovim plugins..."
-        nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+    local post_install_args=""
+    if [ "$INSTALL_TMUX_PLUGINS" = true ]; then
+        post_install_args="--install-tmux-plugins"
     fi
 
-    success "Post-installation complete"
+    ./scripts/post-install.sh $post_install_args
 }
 
 # Main
@@ -471,7 +474,9 @@ main() {
 
     # Post-installation
     if [ "$DRY_RUN" = true ]; then
-        info "[DRY-RUN] Would run post-installation setup"
+        local tmux_msg=""
+        [ "$INSTALL_TMUX_PLUGINS" = true ] && tmux_msg=" (including tmux plugins)"
+        info "[DRY-RUN] Would run post-installation setup$tmux_msg"
     else
         post_install
     fi
@@ -483,7 +488,11 @@ main() {
     echo ""
     echo "Next steps:"
     echo "  1. Restart your terminal or run: exec zsh"
-    echo "  2. (Tmux) Press prefix + I to install plugins"
+    if [ "$INSTALL_TMUX_PLUGINS" = true ]; then
+        echo "  2. (Tmux) Plugins installed"
+    else
+        echo "  2. (Tmux) Press prefix + I to install plugins"
+    fi
     echo "  3. (Neovim) Run :checkhealth to verify setup"
     echo ""
 }
