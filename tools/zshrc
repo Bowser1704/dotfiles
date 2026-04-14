@@ -159,3 +159,6 @@ if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || 
 fi
 
 alias qodercli="qodercli --with-claude-config"
+alias qz=qianzhou-cli
+
+export PATH="$HOME/.utoo-proxy:$PATH"
