@@ -33,6 +33,28 @@ return {
           },
         },
       },
+      {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+            filetypes = {
+              markdown = true,
+              help = true,
+            },
+          })
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = "zbirenbaum/copilot.lua",
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
     },
     opts = function()
       local has_words_before = function()
@@ -92,6 +114,7 @@ return {
         sources = cmp.config.sources({
           { name = "lazydev" },
           { name = "nvim_lsp" },
+          { name = "copilot" },
           { name = "luasnip" },
           { name = "path" },
           { name = "buffer" },
@@ -108,6 +131,9 @@ return {
             mode = "symbol_text",
             maxwidth = 50,
             ellipsis_char = "...",
+            symbol_map = {
+              Copilot = "",
+            },
             menu = setmetatable({
               nvim_lsp = "[LSP]",
               luasnip = "[Snip]",
@@ -129,6 +155,8 @@ return {
         sorting = {
           priority_weight = 2,
           comparators = {
+            require("copilot_cmp.comparators").prioritize,
+
             -- Below is the default comparitor list and order for nvim-cmp
             cmp.config.compare.offset,
             -- cmp.config.compare.scopes, --this is commented in nvim-cmp too

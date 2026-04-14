@@ -21,8 +21,6 @@ brew "python@3.11"
 # ============================================
 # Development Tools
 # ============================================
-brew "openspec"
-
 # Version control
 brew "git"
 brew "gh"
