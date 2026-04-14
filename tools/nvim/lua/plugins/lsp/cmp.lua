@@ -89,13 +89,9 @@ return {
             end
           end, { "i", "s" }),
         }),
-        performance = {
-          fetching_timeout = 2000,
-        },
         sources = cmp.config.sources({
           { name = "lazydev" },
           { name = "nvim_lsp" },
-          { name = "minuet" },
           { name = "luasnip" },
           { name = "path" },
           { name = "buffer" },
