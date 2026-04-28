@@ -137,7 +137,12 @@ if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || 
     }
 fi
 
-# aliyun macOS 
-alias qodercli="qodercli --with-claude-config"
+# aliyun macOS
 alias qz=qianzhou-cli
 export PATH="$HOME/.utoo-proxy:$PATH"
+
+# a1 CLI: add install dir to PATH (install.sh)
+export PATH="/Users/hongqi/.local/bin:$PATH"
+
+alias claude="HTTP_PROXY=http://127.0.0.1:8118 HTTPS_PROXY=http://127.0.0.1:8118 claude"
+alias codex="HTTP_PROXY=http://127.0.0.1:8118 HTTPS_PROXY=http://127.0.0.1:8118 codex"
