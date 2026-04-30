@@ -1,0 +1,16 @@
+# Runtime / cache
+node_modules/
+.pi-lens/
+.pi/
+package-lock.json
+
+# pi runtime data (stays in ~/.pi/agent/, not here)
+sessions/
+llm-debug/
+mcp-cache.json
+
+# Never commit
+auth.json
+mcp.json
+settings.json
+MEMORY.md

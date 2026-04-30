@@ -8,8 +8,24 @@ return {
     opts = {},
     keys = {
       { "<leader>fb", "<cmd>FzfLua builtin<cr>", desc = "fzflua builtin commands" },
-      { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files (root dir)" },
-      { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "live grep" },
+      {
+        "<leader>ff",
+        function()
+          local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+          local cwd = (vim.v.shell_error == 0 and git_root) or vim.fn.getcwd()
+          require("fzf-lua").files({ cwd = cwd })
+        end,
+        desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>fg",
+        function()
+          local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+          local cwd = (vim.v.shell_error == 0 and git_root) or vim.fn.getcwd()
+          require("fzf-lua").live_grep({ cwd = cwd })
+        end,
+        desc = "live grep",
+      },
       { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
       { "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Status" },
       { "<leader>gb", "<cmd>FzfLua git_blame<CR>", desc = "Git Blame" },
