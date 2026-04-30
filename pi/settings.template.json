@@ -1,0 +1,40 @@
+{
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-sonnet-4.6",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    {
+      "source": "__DOTFILES_PI__",
+      "extensions": ["-extensions/todos.ts"]
+    },
+    {
+      "source": "git:github.com/Michaelliv/pi-generative-ui",
+      "extensions": ["-.pi/extensions/generative-ui/index.ts"]
+    },
+    "git:github.com/nicobailon/visual-explainer",
+    "npm:pi-powerline-footer",
+    "npm:pi-hooks",
+    "npm:pi-btw"
+  ],
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "theme": "modern-dark",
+  "enabledModels": [
+    "openai-codex/gpt-5.5",
+    "bailian/deepseek-v4-pro",
+    "bailian/qwen3.6-plus",
+    "github-copilot/claude-sonnet-4.6"
+  ],
+  "images": {
+    "blockImages": true
+  },
+  "editorPaddingX": 1,
+  "compaction": {
+    "enabled": true
+  },
+  "memory": {
+    "consolidationModel": "bailian/qwen3.6-plus"
+  },
+  "permissionLevel": "high"
+}

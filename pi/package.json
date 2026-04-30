@@ -1,0 +1,35 @@
+{
+  "name": "bowser1704",
+  "version": "0.0.1",
+  "description": "bowser1704's pi coding agent commands, skills, extensions, and themes",
+  "readme": "README.md",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "pi-skill",
+    "pi-theme"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "themes": [
+      "./themes"
+    ],
+    "prompts": [
+      "./commands"
+    ]
+  },
+  "dependencies": {
+    "diff": "^8.0.2"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-tui": "*"
+  }
+}
