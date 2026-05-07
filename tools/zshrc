@@ -50,7 +50,7 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
+  atinit"zicompinit; zicdreplay; compdef _ali ali" \
       zdharma-continuum/fast-syntax-highlighting \
     OMZP::colored-man-pages \
   atload"_zsh_autosuggest_start" \
@@ -144,5 +144,8 @@ export PATH="$HOME/.utoo-proxy:$PATH"
 # a1 CLI: add install dir to PATH (install.sh)
 export PATH="/Users/hongqi/.local/bin:$PATH"
 
-alias claude="HTTP_PROXY=http://127.0.0.1:8118 HTTPS_PROXY=http://127.0.0.1:8118 claude"
-alias codex="HTTP_PROXY=http://127.0.0.1:8118 HTTPS_PROXY=http://127.0.0.1:8118 codex"
+alias claude="HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 claude"
+alias codex="HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 codex"
+alias pi="HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 pi"
+# PI_PROXY_URL is used by pi's native-web-search skill (search.mjs)
+export PI_PROXY_URL=http://127.0.0.1:7890
