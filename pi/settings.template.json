@@ -4,8 +4,7 @@
   "defaultThinkingLevel": "medium",
   "packages": [
     {
-      "source": "__DOTFILES_PI__",
-      "extensions": ["-extensions/todos.ts"]
+      "source": "__DOTFILES_PI__"
     },
     {
       "source": "git:github.com/Michaelliv/pi-generative-ui",

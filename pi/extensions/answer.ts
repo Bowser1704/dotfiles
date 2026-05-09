@@ -10,9 +10,9 @@
  * 4. Submits the compiled answers when done
  */
 
-import { complete, type Model, type Api, type UserMessage } from "@mariozechner/pi-ai";
-import type { ExtensionAPI, ExtensionContext, ModelRegistry } from "@mariozechner/pi-coding-agent";
-import { BorderedLoader } from "@mariozechner/pi-coding-agent";
+import { complete, type Model, type Api, type UserMessage } from "@earendil-works/pi-ai";
+import type { ExtensionAPI, ExtensionContext, ModelRegistry } from "@earendil-works/pi-coding-agent";
+import { BorderedLoader } from "@earendil-works/pi-coding-agent";
 import {
 	type Component,
 	Editor,
@@ -23,7 +23,7 @@ import {
 	type TUI,
 	visibleWidth,
 	wrapTextWithAnsi,
-} from "@mariozechner/pi-tui";
+} from "@earendil-works/pi-tui";
 
 // Structured output format for question extraction
 interface ExtractedQuestion {
@@ -67,16 +67,18 @@ Example output:
   ]
 }`;
 
-const CODEX_MODEL_ID = "gpt-5.1-codex-mini";
+const CODEX_MODEL_ID = "gpt-5-codex-mini";
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
 
 /**
- * Prefer Codex mini for extraction when available, otherwise fallback to haiku or the current model.
+ * Select model for extraction: try Codex mini first, then Haiku,
+ * finally fall back to the current session model.
  */
 async function selectExtractionModel(
 	currentModel: Model<Api>,
 	modelRegistry: ModelRegistry,
 ): Promise<Model<Api>> {
+	// Try Codex mini
 	const codexModel = modelRegistry.find("openai-codex", CODEX_MODEL_ID);
 	if (codexModel) {
 		const auth = await modelRegistry.getApiKeyAndHeaders(codexModel);
@@ -85,17 +87,17 @@ async function selectExtractionModel(
 		}
 	}
 
+	// Try Haiku
 	const haikuModel = modelRegistry.find("anthropic", HAIKU_MODEL_ID);
-	if (!haikuModel) {
-		return currentModel;
+	if (haikuModel) {
+		const auth = await modelRegistry.getApiKeyAndHeaders(haikuModel);
+		if (auth.ok) {
+			return haikuModel;
+		}
 	}
 
-	const auth = await modelRegistry.getApiKeyAndHeaders(haikuModel);
-	if (!auth.ok) {
-		return currentModel;
-	}
-
-	return haikuModel;
+	// Fall back to current model
+	return currentModel;
 }
 
 /**
@@ -445,7 +447,7 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			// Select the best model for extraction (prefer Codex mini, then haiku)
+			// Select the best model for extraction (prefer current model, fallback to Codex mini / Haiku)
 			const extractionModel = await selectExtractionModel(ctx.model, ctx.modelRegistry);
 
 			// Run extraction with loader UI
@@ -473,6 +475,9 @@ export default function (pi: ExtensionAPI) {
 					if (response.stopReason === "aborted") {
 						return null;
 					}
+					if (response.stopReason === "error") {
+						throw new Error(`Model error: ${response.content.map(c => c.type === "text" ? c.text : "").join(" ")}`);
+					}
 
 					const responseText = response.content
 						.filter((c): c is { type: "text"; text: string } => c.type === "text")
@@ -484,7 +489,10 @@ export default function (pi: ExtensionAPI) {
 
 				doExtract()
 					.then(done)
-					.catch(() => done(null));
+					.catch((err: Error) => {
+						tui.notify?.(`Extraction failed: ${err.message}`, "error");
+						done(null);
+					});
 
 				return loader;
 			});

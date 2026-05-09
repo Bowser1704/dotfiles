@@ -12,7 +12,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const ENABLED = process.env.PI_DEBUG_LLM === "1";
 const LOG_DIR = join(homedir(), ".pi", "agent", "llm-debug");

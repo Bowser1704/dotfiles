@@ -284,10 +284,10 @@ async function loadPiAi() {
 	const tried = [];
 
 	try {
-		return await import("@mariozechner/pi-ai");
+		return await import("@earendil-works/pi-ai");
 	} catch (err) {
 		tried.push(
-			`@mariozechner/pi-ai (${err?.code || err?.message || "not found"})`,
+			`@earendil-works/pi-ai (${err?.code || err?.message || "not found"})`,
 		);
 	}
 
@@ -304,7 +304,7 @@ async function loadPiAi() {
 	}
 
 	throw new Error(
-		`Could not load @mariozechner/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
+		`Could not load @earendil-works/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
 	);
 }
 
@@ -316,14 +316,14 @@ async function loadPiAiOAuth(piAi) {
 	const tried = [];
 
 	try {
-		const oauth = await import("@mariozechner/pi-ai/oauth");
+		const oauth = await import("@earendil-works/pi-ai/oauth");
 		if (typeof oauth.getOAuthApiKey === "function") {
 			return { getOAuthApiKey: oauth.getOAuthApiKey.bind(oauth) };
 		}
-		tried.push("@mariozechner/pi-ai/oauth (missing getOAuthApiKey export)");
+		tried.push("@earendil-works/pi-ai/oauth (missing getOAuthApiKey export)");
 	} catch (err) {
 		tried.push(
-			`@mariozechner/pi-ai/oauth (${err?.code || err?.message || "not found"})`,
+			`@earendil-works/pi-ai/oauth (${err?.code || err?.message || "not found"})`,
 		);
 	}
 

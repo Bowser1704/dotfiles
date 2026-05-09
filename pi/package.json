@@ -21,15 +21,15 @@
       "./themes"
     ],
     "prompts": [
-      "./commands"
+      "./prompts"
     ]
   },
   "dependencies": {
     "diff": "^8.0.2"
   },
   "peerDependencies": {
-    "@mariozechner/pi-coding-agent": "*",
-    "@mariozechner/pi-ai": "*",
-    "@mariozechner/pi-tui": "*"
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-tui": "*"
   }
 }
