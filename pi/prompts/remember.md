@@ -1,5 +1,6 @@
 ---
-description: Append a fact to the right AGENTS.md (global or project). Usage: /remember [--global|--project] <fact>
+description: "Append a fact to the right AGENTS.md (global or project). Usage: /remember [--global|--project] <fact>"
+argument-hint: "[global / project]"
 ---
 
 The user wants to persist a fact to AGENTS.md. Arguments: `$ARGUMENTS`
