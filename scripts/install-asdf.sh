@@ -6,6 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+echo $DOTFILES_DIR
 
 # Source common functions
 source "$SCRIPT_DIR/../lib/common.sh"
@@ -81,7 +82,7 @@ install_asdf_tools() {
     info "Installing asdf plugins and tools..."
     [ -n "$GITHUB_PROXY" ] && info "Using GitHub proxy: $GITHUB_PROXY"
 
-    local tool_versions_file="$DOTFILES_DIR/tool-versions"
+    local tool_versions_file="$DOTFILES_DIR/tools/tool-versions"
 
     if [ ! -f "$tool_versions_file" ]; then
         warn "tool-versions file not found"
