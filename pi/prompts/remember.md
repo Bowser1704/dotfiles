@@ -1,13 +1,14 @@
 ---
-description: Append a fact to the right AGENTS.md (global or project). Usage: /remember [--global|--project] <fact>
+description: "Append a fact to the right AGENTS.md (global or project). Usage: /remember [--global|--project] <fact>"
 ---
 
 The user wants to persist a fact to AGENTS.md. Arguments: `$ARGUMENTS`
 
 ## Files
 
-- **Global**: `/Users/hongqi/.dotfiles/pi/AGENTS.md` (loaded for every pi session)
+- **Global**: `~/.pi/agent/AGENTS.md` (loaded for every pi session). `~/.claude/CLAUDE.md` should be a symlink to this file.
 - **Project**: nearest `AGENTS.md` walking up from `$(pwd)`. If none exists in the project tree, ask before creating one at the repo root.
+- **Symlink**: after creating/updating any AGENTS.md, ensure a sibling `CLAUDE.md` symlink exists: `ln -sf AGENTS.md CLAUDE.md` (in the same directory). This lets Claude Code read the same instructions.
 
 ## Steps
 
@@ -37,4 +38,5 @@ The user wants to persist a fact to AGENTS.md. Arguments: `$ARGUMENTS`
 
 - One fact per call. If the user dumps multiple, ask which to keep or split.
 - Don't reformat the rest of the file — surgical edit only. Use `/agents-refactor` for cleanup.
-- Don't write to `~/.claude/CLAUDE.md` directly; it's a symlink to the global AGENTS.md.
+- Don't write to `~/.claude/CLAUDE.md` directly; it's a symlink to `~/.pi/agent/AGENTS.md`.
+- After writing to any AGENTS.md, create/verify the CLAUDE.md symlink: `ln -sf AGENTS.md CLAUDE.md` (same directory).

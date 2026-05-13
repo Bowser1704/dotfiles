@@ -40,3 +40,9 @@ Analyze this project and generate an AGENTS.md file. Follow these principles str
 If arguments are provided, use them as the project description/one-liner at the top. Otherwise, infer one from the project.
 
 Overwrite the project's AGENTS.md only after showing the draft and getting confirmation.
+
+After saving, ensure a symlink exists so Claude Code can also read it:
+```bash
+ln -sf AGENTS.md CLAUDE.md
+```
+(run in the same directory as the AGENTS.md you just created)
