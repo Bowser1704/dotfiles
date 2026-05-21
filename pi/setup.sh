@@ -10,7 +10,6 @@
 #   4. Installs node_modules if needed
 #
 # API keys (set in your shell profile, NOT in dotfiles):
-#   DASHSCOPE_API_KEY   — Alibaba Cloud Bailian
 #   TOKEN_PLAN_API_KEY  — Token Plan
 #   (GitHub Copilot / Anthropic / OpenAI auth is managed by pi itself via auth.json)
 
@@ -81,7 +80,6 @@ symlink() {
 
 echo "Setting up symlinks..."
 symlink "$DOTFILES_PI/AGENTS.md"   "$PI_AGENT/AGENTS.md"
-symlink "$DOTFILES_PI/models.json" "$PI_AGENT/models.json"
 
 # Pi extensions from dotfiles — only truly global ones
 GLOBAL_EXTS=("workmux-status.ts")
@@ -102,8 +100,5 @@ echo ""
 echo "✅ pi setup complete. Run 'pi' to start (or /reload if already running)."
 echo ""
 echo "Remaining manual steps:"
-echo "  • API keys: add DASHSCOPE_API_KEY / TOKEN_PLAN_API_KEY to your shell profile"
+echo "  • API keys: add TOKEN_PLAN_API_KEY to your shell profile"
 echo "  • GitHub Copilot / Anthropic auth: run 'pi' and follow login prompts"
-if [[ -z "${ALIDOC_MCP_URL:-}" ]]; then
-echo "  • MCP: set ALIDOC_MCP_URL and re-run this script"
-fi

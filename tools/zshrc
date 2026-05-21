@@ -55,7 +55,7 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay; compdef _ali ali" \
+  atinit"zicompinit; zicdreplay" \
       zdharma-continuum/fast-syntax-highlighting \
     OMZP::colored-man-pages \
   atload"_zsh_autosuggest_start" \
@@ -155,3 +155,5 @@ _ensure_completion gh       "gh completion -s zsh"
 _ensure_completion uv       "uv generate-shell-completion zsh"
 
 unfunction _ensure_completion
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

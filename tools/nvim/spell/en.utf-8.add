@@ -83,7 +83,6 @@ oss
 nsfw
 img
 kafka
-aliyun
 nacos
 mongo
 noqa
@@ -137,7 +136,6 @@ goproxy
 Dest
 iframe
 hostname
-aliyuncs
 beijing
 ossroutes
 ossroute
