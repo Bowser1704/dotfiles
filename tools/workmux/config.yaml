@@ -1,0 +1,16 @@
+# workmux config — custom tmux status bar, workmux won't auto-modify it
+status_format: false
+
+# Agent status icons
+status_icons:
+  working: "🔄"
+  waiting: "💬"
+  done: "✅"
+
+# Sidebar defaults
+sidebar:
+  position: left
+  width: 35
+  layout: tiles
+nerdfont: true
+theme: mossfire

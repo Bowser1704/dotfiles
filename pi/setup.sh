@@ -83,6 +83,14 @@ echo "Setting up symlinks..."
 symlink "$DOTFILES_PI/AGENTS.md"   "$PI_AGENT/AGENTS.md"
 symlink "$DOTFILES_PI/models.json" "$PI_AGENT/models.json"
 
+# Pi extensions from dotfiles — only truly global ones
+GLOBAL_EXTS=("workmux-status.ts")
+mkdir -p "$PI_AGENT/extensions"
+for name in "${GLOBAL_EXTS[@]}"; do
+  ext="$DOTFILES_PI/extensions/$name"
+  symlink "$ext" "$PI_AGENT/extensions/$name"
+done
+
 # ── 4. node_modules ───────────────────────────────────────────────────────────
 if [[ -f "$DOTFILES_PI/package.json" && ! -d "$DOTFILES_PI/node_modules" ]]; then
   echo "Installing node_modules..."

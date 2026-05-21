@@ -12,6 +12,7 @@
     ~/.zshrc: tools/zshrc
     ~/.stylua.toml: tools/stylua.toml
     ~/.config/fontconfig: tools/fontconfig
+    ~/.config/workmux: tools/workmux
 
 # macOS GUI configurations (ghostty)
 - link:

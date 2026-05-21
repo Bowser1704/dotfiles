@@ -148,5 +148,3 @@ alias pi="HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 pi"
 # PI_PROXY_URL is used by pi's native-web-search skill (search.mjs)
 export PI_PROXY_URL=http://127.0.0.1:7890
 
-# a1 CLI: add install dir to PATH (install.sh)
-export PATH="/Users/hongqi/.qoderwork/bin:$PATH"
