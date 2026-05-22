@@ -1,2 +1,13 @@
 lazy-lock.json
 .claude
+
+# Pi runtime artifacts (per-environment, not in git)
+pi/AGENTS.md
+pi/settings.json
+pi/node_modules/
+pi/package-lock.json
+pi/.pi/
+pi/.pi-lens/
+
+# Internal skills (only tracked on internal branch)
+pi/skills-private/

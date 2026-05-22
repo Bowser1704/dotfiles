@@ -4,36 +4,30 @@
   "defaultThinkingLevel": "medium",
   "packages": [
     {
-      "source": "__DOTFILES_PI__"
+      "source": "__DOTFILES_PI__",
+      "skills": [
+        "+pi/skills/excalidraw-diagram/SKILL.md",
+        "+pi/skills/mermaid/SKILL.md",
+        "+pi/skills/native-web-search/SKILL.md",
+        "+pi/skills/uv/SKILL.md"
+      ],
+      "extensions": [
+        "+pi/extensions/*.ts",
+        "+pi/extensions/*/index.ts"
+      ]
     },
-    {
-      "source": "git:github.com/Michaelliv/pi-generative-ui",
-      "extensions": ["-.pi/extensions/generative-ui/index.ts"]
-    },
-    "git:github.com/nicobailon/visual-explainer",
     "npm:pi-powerline-footer",
-    "npm:pi-hooks",
-    "npm:pi-btw"
+    "npm:pi-hooks"
   ],
   "terminal": {
     "showTerminalProgress": true
   },
   "theme": "modern-dark",
-  "enabledModels": [
-    "openai-codex/gpt-5.5",
-    "bailian/deepseek-v4-pro",
-    "bailian/qwen3.6-plus",
-    "github-copilot/claude-sonnet-4.6"
-  ],
   "images": {
     "blockImages": true
   },
   "editorPaddingX": 1,
   "compaction": {
     "enabled": true
-  },
-  "memory": {
-    "consolidationModel": "bailian/qwen3.6-plus"
-  },
-  "permissionLevel": "high"
+  }
 }

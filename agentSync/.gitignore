@@ -1,0 +1,18 @@
+node_modules/
+.DS_Store
+.env
+*.backup.*
+providers.local.json
+
+# Pi package runtime artifacts (when linked)
+.pi-lens/
+.pi/
+package-lock.json
+sessions/
+llm-debug/
+mcp-cache.json
+auth.json
+mcp.json
+settings.json
+MEMORY.md
+.claude/

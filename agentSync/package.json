@@ -1,0 +1,25 @@
+{
+  "name": "agent-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable coding agent config manager — one repo, one command, all agents.",
+  "bin": {
+    "agent-sync": "./bin/agent-sync.mjs",
+    "agentSync": "./bin/agent-sync.mjs"
+  },
+  "scripts": {
+    "sync": "node bin/agent-sync.mjs sync",
+    "watch": "node bin/agent-sync.mjs watch",
+    "status": "node bin/agent-sync.mjs status",
+    "providers": "node bin/agent-sync.mjs providers list",
+    "inventory": "node bin/agent-sync.mjs inventory",
+    "check": "node --check bin/agent-sync.mjs && find src -name '*.mjs' -maxdepth 1 -print0 | xargs -0 -n1 node --check"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "undici": "^8.2.0"
+  }
+}

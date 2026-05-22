@@ -4,10 +4,10 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
+    build = ":TSUpdate",
     opts = {
       highlight = { enable = true },
       indent = { enable = true, disable = { "python" } },
-      context_commentstring = { enable = true, enable_autocmd = false },
       ensure_installed = {
         "bash",
         "c",
@@ -39,7 +39,7 @@ return {
       },
     },
     config = function(_, opts)
-      require("nvim-treesitter.config").setup(opts)
+      require("nvim-treesitter.configs").setup(opts)
     end,
   },
   {

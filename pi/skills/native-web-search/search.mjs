@@ -18,9 +18,12 @@ if (PROXY_URL) {
 		proxyUrl = "http://" + proxyUrl;
 	}
 	try {
-		// Try node_modules relative to this script first, then global
+		// Try local node_modules first (undici 8+ needed for Node 26 global fetch),
+		// then fall back to parent dir, then global import
 		const { ProxyAgent, setGlobalDispatcher } = await import(
-			new URL("../node_modules/undici/index.js", import.meta.url).href
+			new URL("node_modules/undici/index.js", import.meta.url).href
+		).catch(() =>
+			import(new URL("../node_modules/undici/index.js", import.meta.url).href),
 		).catch(() => import("undici"));
 		setGlobalDispatcher(new ProxyAgent(proxyUrl));
 		console.error(`[web-search] Proxy enabled: ${proxyUrl}`);
@@ -220,7 +223,7 @@ function collectModuleCandidates(
 		let dir = start;
 		for (let i = 0; i < 8; i++) {
 			add(
-				join(dir, "node_modules", "@mariozechner", "pi-ai", "dist", fileName),
+				join(dir, "node_modules", "@earendil-works", "pi-ai", "dist", fileName),
 			);
 			add(join(dir, "packages", "ai", "dist", fileName));
 			add(join(dir, "ai", "dist", fileName));
@@ -242,7 +245,7 @@ function collectModuleCandidates(
 					piDir,
 					"..",
 					"node_modules",
-					"@mariozechner",
+					"@earendil-works",
 					"pi-ai",
 					"dist",
 					fileName,
@@ -254,7 +257,7 @@ function collectModuleCandidates(
 					"..",
 					"..",
 					"node_modules",
-					"@mariozechner",
+					"@earendil-works",
 					"pi-ai",
 					"dist",
 					fileName,
@@ -281,14 +284,10 @@ function collectModuleCandidates(
 }
 
 async function loadPiAi() {
-	const tried = [];
-
 	try {
 		return await import("@earendil-works/pi-ai");
-	} catch (err) {
-		tried.push(
-			`@earendil-works/pi-ai (${err?.code || err?.message || "not found"})`,
-		);
+	} catch {
+		// not available as direct import
 	}
 
 	for (const candidate of collectModuleCandidates(
@@ -298,14 +297,13 @@ async function loadPiAi() {
 		if (!existsSync(candidate)) continue;
 		try {
 			return await import(pathToFileURL(candidate).href);
-		} catch (err) {
-			tried.push(`${candidate} (${err?.code || err?.message || "failed"})`);
+		} catch {
+			// try next
 		}
 	}
 
-	throw new Error(
-		`Could not load @earendil-works/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
-	);
+	// pi-ai not available — return stub; skill will use hardcoded fallbacks
+	return {};
 }
 
 async function loadPiAiOAuth(piAi) {
