@@ -53,25 +53,14 @@ async function ensurePiSettings(cfg, opts) {
   }
 }
 
+// NOTE: agent-sync does NOT manage AGENTS.md or CLAUDE.md.
+// Those files are user-owned and edited directly — never symlink or overwrite them.
 export async function syncPi(cfg, previous, opts = {}) {
   const { dryRun = false, log = () => {}, warn = () => {} } = opts;
   const piPkgRoot = piPackageRoot();
   const managedLinks = {};
 
   await fsp.mkdir(cfg.pi.agentDir, { recursive: true });
-
-  if (cfg.resources.syncPiAgentContext) {
-    const link = path.join(cfg.pi.agentDir, "AGENTS.md");
-    const result = await replaceWithSymlink(link, cfg.resources.contextSource, { force: true, dryRun, log });
-    if (result.changed) log(`linked Pi AGENTS.md -> ${cfg.resources.contextSource}`);
-    managedLinks[link] = cfg.resources.contextSource;
-
-    const prevLink = previous.links?.[link];
-    if (prevLink && prevLink !== cfg.resources.contextSource) {
-      const removed = await removeManagedLink(link, prevLink, { dryRun, log });
-      if (removed) log(`removed stale Pi AGENTS.md link`);
-    }
-  }
 
   const modelsJson = path.join(piPkgRoot, "models.json");
   if (exists(modelsJson)) {

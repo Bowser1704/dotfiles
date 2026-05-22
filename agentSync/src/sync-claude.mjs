@@ -20,8 +20,7 @@ const execFile = promisify(cp.execFile);
 
 function isManagedClaudePath(linkPath, cfg) {
   return linkPath.startsWith(path.join(cfg.claude.dir, "skills") + path.sep)
-    || linkPath.startsWith(path.join(cfg.claude.dir, "commands") + path.sep)
-    || linkPath === path.join(cfg.claude.dir, "CLAUDE.md");
+    || linkPath.startsWith(path.join(cfg.claude.dir, "commands") + path.sep);
 }
 
 async function cleanupStaleClaudeLinks(previousLinks, desiredLinks, cfg, opts) {
@@ -88,18 +87,13 @@ async function ensureSkillDeps(cfg, opts) {
   }
 }
 
+// NOTE: agent-sync does NOT manage CLAUDE.md or AGENTS.md.
+// Those files are user-owned and edited directly — never symlink or overwrite them.
 export async function syncClaude(cfg, previous, opts = {}) {
   const { dryRun = false, log = () => {}, warn = () => {} } = opts;
   await ensureSkillDeps(cfg, opts);
   const resources = await discoverResources(cfg);
   const managedLinks = {};
-
-  {
-    const link = path.join(cfg.claude.dir, "CLAUDE.md");
-    const result = await replaceWithSymlink(link, cfg.resources.contextSource, { force: true, dryRun, log });
-    if (result.changed) log(`linked Claude CLAUDE.md -> ${cfg.resources.contextSource}`);
-    managedLinks[link] = cfg.resources.contextSource;
-  }
 
   {
     const skillsDir = path.join(cfg.claude.dir, "skills");

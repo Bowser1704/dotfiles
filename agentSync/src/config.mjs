@@ -26,7 +26,6 @@ export function defaultConfig() {
       ],
     },
     resources: {
-      contextSource: path.join(PROJECT_ROOT, "..", "pi", "AGENTS.md"),
       skillDirs: [
         path.join(PROJECT_ROOT, "..", "pi", "skills"),
         path.join(PROJECT_ROOT, "..", "pi", "skills-private"),
@@ -109,7 +108,6 @@ export async function loadConfig(configPath) {
   cfg.claude.dir = claudeDir;
   cfg.claude.settingsPath = resolvePath(cfg.claude.settingsPath || path.join(claudeDir, "settings.json"));
   if (cfg.claude.overlayPath) cfg.claude.overlayPath = resolvePath(cfg.claude.overlayPath);
-  cfg.resources.contextSource = resolvePath(cfg.resources.contextSource);
   cfg.resources.skillDirs = (cfg.resources.skillDirs || []).map((p) => resolvePath(p));
   cfg.resources.promptDirs = (cfg.resources.promptDirs || []).map((p) => resolvePath(p));
   cfg.resources.extraSkillDirs = (cfg.resources.extraSkillDirs || []).map((p) => resolvePath(p));
@@ -122,7 +120,6 @@ export async function ensureUserConfig(cfg, { dryRun = false, log = () => {} } =
   if (exists(file)) return file;
   const userConfig = {
     resources: {
-      contextSource: cfg.resources.contextSource.replace(HOME, "~"),
       extraSkillDirs: cfg.resources.extraSkillDirs.map((p) => p.replace(HOME, "~")),
     },
     claude: {

@@ -77,13 +77,11 @@ export function mergeClaudeSettingsForSync(settings, cfg, resources) {
     if (!array.includes(value)) array.push(value);
   };
 
-  pushUnique(allow, `Read(${cfg.resources.contextSource})`);
   for (const root of cfg.resources.extraSkillDirs || []) pushUnique(allow, `Read(${root}/**)`);
   for (const skillName of [...resources.skills.keys()].sort()) pushUnique(allow, `Skill(${skillName})`);
 
   settings.agentSync ||= {};
   settings.agentSync.managedBy = "agentSync";
-  settings.agentSync.source = cfg.resources.contextSource;
   settings.agentSync.syncedSkills = [...resources.skills.keys()].sort();
   settings.agentSync.syncedCommands = [...resources.prompts.keys()].sort();
 }
