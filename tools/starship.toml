@@ -1,0 +1,44 @@
+# ~/.config/starship.toml — Starship prompt (replaces Powerlevel10k)
+# Docs: https://starship.rs/config/  •  customize with `starship configure`
+# Needs a Nerd Font for the symbols.
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$kubernetes\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = false
+
+[character]
+success_symbol = "[➜](green)"
+error_symbol = "[➜](red)"
+vimcmd_symbol = "[➜](magenta)"
+vimcmd_replace_symbol = "[➜](magenta)"
+vimcmd_visual_symbol = "[➜](magenta)"
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+style = "cyan"
+
+[git_branch]
+symbol = " "
+style = "magenta"
+
+[git_status]
+style = "yellow"
+
+# kubectl context / namespace (replaces upstream's superbrothers/zsh-kubectl-prompt)
+[kubernetes]
+disabled = false
+format = '[$context(\($namespace\))]($style) '
+style = "blue"
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "yellow"

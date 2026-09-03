@@ -27,7 +27,7 @@ cd ~/.dotfiles
 
 ### Editor & Shell
 - **Neovim** - LazyVim-based configuration with LSP, DAP, and completion
-- **Zsh** - Zinit plugin manager with Powerlevel10k theme
+- **Zsh** - Zinit plugin manager with Starship prompt
 - **Tmux** - Terminal multiplexer with vi keybindings and plugins
 
 ### Terminal

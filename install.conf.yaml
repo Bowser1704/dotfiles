@@ -10,6 +10,7 @@
     ~/.config/nvim: tools/nvim
     ~/.tmux.conf: tools/tmux.conf
     ~/.zshrc: tools/zshrc
+    ~/.config/starship.toml: tools/starship.toml
     ~/.stylua.toml: tools/stylua.toml
     ~/.config/fontconfig: tools/fontconfig
     ~/.config/workmux: tools/workmux

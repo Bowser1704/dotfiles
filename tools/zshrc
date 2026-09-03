@@ -1,77 +1,124 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# ~/.zshrc — cross-platform (macOS + Linux). Managed by zinit; Starship prompt.
+# Linked from ~/.zshrc -> here by Dotbot (install.conf.yaml).
+# Machine-local / internal overrides belong in ~/.zshrc.local (gitignored).
+#
+# Changes vs the previous Powerlevel10k version (all for speed/portability):
+#   - Starship replaces p10k (faster). Loaded via `zinit gh-r`, so it works on
+#     macOS + Linux with no Homebrew dependency.
+#   - superbrothers/zsh-kubectl-prompt dropped: it ran kubectl on every precmd
+#     (~1.2s cold). Starship's built-in kubernetes module replaces it.
+#   - zsh-completions loaded synchronously BEFORE the cached compinit, and
+#     compinit is cached 24h — upstream's `atinit"zicompinit"` re-ran compinit
+#     (re-scanning ~1000 completion files) on every shell.
+
+# ---------------------------------------------------------------------------
+# Environment / PATH
+# ---------------------------------------------------------------------------
+# asdf 0.16+ is a standalone binary. Its shims directory must be on PATH;
+# the nearest .tool-versions file then selects the version per project.
+export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
+typeset -U path PATH
+path=(
+  "$ASDF_DATA_DIR/shims"
+  "$HOME/.asdf/bin"
+  "$HOME/.local/bin"
+  "${KREW_ROOT:-$HOME/.krew}/bin"
+  $path
+  "$HOME/.cargo/bin"
+)
+# Homebrew (macOS Apple Silicon / Intel, and Linuxbrew) — only when present.
+[[ -d /opt/homebrew/bin ]] && path=(/opt/homebrew/bin $path)
+[[ -d /usr/local/bin ]] && path=(/usr/local/bin $path)
+[[ -d /home/linuxbrew/.linuxbrew/bin ]] && path=(/home/linuxbrew/.linuxbrew/bin $path)
+export PATH
+
+export TERM="${TERM:-xterm-256color}"
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+# ---------------------------------------------------------------------------
+# zinit (plugin manager) — sourced early so completion plugins populate fpath
+# before the cached compinit runs.
+# ---------------------------------------------------------------------------
+if [[ ! -r "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
+  command mkdir -p "$HOME/.local/share/zinit"
+  command git clone --depth=1 https://github.com/zdharma-continuum/zinit.git \
+    "$HOME/.local/share/zinit/zinit.git" 2>/dev/null
 fi
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-export PATH=$HOME/.asdf/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:$HOME/.cargo/bin
-export PATH=$PATH:/opt/homebrew/bin
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# zsh-completions + docker completion: load synchronously BEFORE compinit so
+# their completion files enter fpath and get picked up by the cached compinit
+# (no per-shell zicompinit re-scan).
+zinit light zsh-users/zsh-completions
+zinit ice as"completion"
+zinit snippet OMZP::docker/completions/_docker
 
-export TERM="xterm-256color"
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# Custom completion directory
+# ---------------------------------------------------------------------------
+# Completion (cached for 24h — fast startup, no per-shell re-scan)
+# ---------------------------------------------------------------------------
 ZSH_COMP_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions"
 [[ -d "$ZSH_COMP_DIR" ]] || mkdir -p "$ZSH_COMP_DIR"
 fpath=("$ZSH_COMP_DIR" $fpath)
 
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+typeset -g ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${HOST}-${ZSH_VERSION}"
+[[ -d ${ZSH_COMPDUMP:h} ]] || mkdir -p "${ZSH_COMPDUMP:h}"
 
-# Created by newuser for 5.8
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+autoload -Uz compinit bashcompinit
+zmodload zsh/datetime 2>/dev/null
+zmodload -F zsh/stat b:zstat 2>/dev/null
+typeset -a _dump_mtime
+if [[ -f "$ZSH_COMPDUMP" ]] && zstat -A _dump_mtime +mtime "$ZSH_COMPDUMP" 2>/dev/null \
+   && (( EPOCHSECONDS - _dump_mtime[1] < 86400 )); then
+  compinit -C -d "$ZSH_COMPDUMP"
+else
+  compinit -d "$ZSH_COMPDUMP" && zcompile "$ZSH_COMPDUMP" 2>/dev/null
 fi
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+unset _dump_mtime
+bashcompinit
 
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+zstyle ':completion:*:warnings'     format '%F{red}no matches%f'
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/cache"
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
+# ---------------------------------------------------------------------------
+# Plugins + prompt
+# ---------------------------------------------------------------------------
+
+# Annexes (loaded without Turbo, per zinit docs)
 zinit light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
-### End of Zinit's installer chunk
+# Prompt: Starship (replaces Powerlevel10k). Fetched via `zinit gh-r` so it
+# works on macOS + Linux with no Homebrew dependency. Config:
+# ~/.config/starship.toml (symlinked from tools/starship.toml by Dotbot).
+zinit ice as"command" from"gh-r" \
+  atclone'chmod +x starship; ./starship init zsh > init.zsh; ./starship completions zsh > _starship' \
+  atpull'%atclone' \
+  src"init.zsh"
+zinit light starship/starship
 
-export POWERLEVEL9K_INSTANT_PROMPT=quiet
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
-      zdharma-continuum/fast-syntax-highlighting \
-    OMZP::colored-man-pages \
+# Input plugins (synchronous — turbo did not reliably load zsh-autosuggestions;
+zinit light-mode for \
+    zdharma-continuum/fast-syntax-highlighting \
+  OMZP::colored-man-pages \
   atload"_zsh_autosuggest_start" \
-      zsh-users/zsh-autosuggestions \
-  blockf atpull'zinit creinstall -q .' \
-      zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions
 
-# omz plugin
+# omz plugins + libraries (synchronous)
 zinit light-mode for \
-  as"completion" \
-    OMZP::docker/completions/_docker \
-    OMZL::completion.zsh
-
-zinit light-mode for \
+  OMZL::completion.zsh \
     hlissner/zsh-autopair \
-    superbrothers/zsh-kubectl-prompt \
     OMZP::kubectl \
     OMZP::gitignore \
     OMZP::cp \
@@ -79,39 +126,46 @@ zinit light-mode for \
     OMZL::clipboard.zsh \
     OMZL::history.zsh
 
-zinit ice atload"unalias grv"; zinit snippet OMZP::git
+# git aliases (gco/gst/ga/...); drop grv which collides
+zinit ice atload"unalias grv 2>/dev/null"
+zinit snippet OMZP::git
 
+# direnv (binary via gh-r; cross-platform, no Homebrew)
 zinit from"gh-r" as"program" mv"direnv* -> direnv" \
     atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
     pick"direnv" src="zhook.zsh" for \
         direnv/direnv
 
 # zsh-vi-mode
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
-# For postponing loading `fzf`
-zinit ice lucid wait; zinit snippet OMZP::fzf
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
 
-zinit ice depth=1; zinit light Tarrasch/zsh-autoenv
+# fzf key-bindings (fzf binary must be installed separately)
+zinit ice lucid wait
+zinit snippet OMZP::fzf
 
+# zsh-autoenv (directory-local env, like a per-dir direnv)
+zinit ice depth=1
+zinit light Tarrasch/zsh-autoenv
 
+# ---------------------------------------------------------------------------
+# Helpers / completions for installed tools
+# ---------------------------------------------------------------------------
 load_completion_with_zinit() {
-  # Check if an argument is provided
   if [ -z "$1" ]; then
-    echo "Usage: load_completion_with_zinit <command>"
-    return 1
+    echo "Usage: load_completion_with_zinit <command>"; return 1
   fi
-
-  # Generate and load completion script using Zinit
   zinit ice as"completion" wait"0" lucid
   zinit snippet <<<"$($1 completion zsh)"
 }
 
-_exists() { (( $+commands[$1])) }
+_exists() { (( $+commands[$1] )) }
 _exists lsd     && alias ls='lsd' && alias ll='ls -lh'
-_exists eza     && alias ls='eza --icons' && alias ll='ls -lh'
+_exists eza     && alias ls='eza --group-directories-first' && alias ll='ls -lh'
 _exists htop    && alias top='htop'
 _exists fdfind  && alias fd='fdfind'
 _exists batcat  && alias cat='batcat'
+_exists bat     && alias cat='bat --paging=never --style=plain'
 _exists free    && alias free='free -h'
 _exists less    && export PAGER=less
 _exists less    && alias more='less'
@@ -120,27 +174,15 @@ _exists rg      && alias grep='rg'
 _exists curlie  && alias curl='curlie' && compdef _curl curlie
 _exists delta   && alias diff='delta'
 _exists difft   && alias diff='difft' && export KUBECTL_EXTERNAL_DIFF="difft"
-# _exists kubectl && load_completion_with_zinit kubectl
 
 if _exists nvim; then
-    export EDITOR=nvim
-    export VISUAL=nvim
-    export MANPAGER="nvim +Man!"
-    alias vim='nvim'
-    alias vi='nvim'
+  export EDITOR=nvim
+  export VISUAL=nvim
+  export MANPAGER="nvim +Man!"
+  alias vim='nvim'
+  alias vi='nvim'
 fi
-
 unfunction _exists
-
-# Copies stdin to clipboard using OSC 52 escape sequence
-if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || "$TERM" == "tmux"*) ]]; then
-    # OSC 52 support for non-macOS terminals
-    function clipcopy() {
-      local content_tocopy
-      content_tocopy=$(cat "${1:-/dev/stdin}" | base64 | tr -d '\n')
-      printf "\033]52;c;%s\a" "$content_tocopy" > /dev/tty
-    }
-fi
 
 # Auto-generate completions for installed tools
 _ensure_completion() {
@@ -148,12 +190,20 @@ _ensure_completion() {
   local comp_file="$ZSH_COMP_DIR/_$cmd"
   (( $+commands[$cmd] )) && [[ ! -f "$comp_file" ]] && eval "$generator > $comp_file" 2>/dev/null
 }
+_ensure_completion kubectl "kubectl completion zsh"
+_ensure_completion helm    "helm completion zsh"
+_ensure_completion gh      "gh completion -s zsh"
+_ensure_completion uv      "uv generate-shell-completion zsh"
+unfunction _ensure_completion 2>/dev/null
 
-_ensure_completion kubectl  "kubectl completion zsh"
-_ensure_completion helm     "helm completion zsh"
-_ensure_completion gh       "gh completion -s zsh"
-_ensure_completion uv       "uv generate-shell-completion zsh"
+# Copies stdin to clipboard using OSC 52 escape sequence (non-macOS terminals)
+if [[ "$OSTYPE" != "darwin"* && ("$TERM" == "xterm"* || "$TERM" == "screen"* || "$TERM" == "tmux"*) ]]; then
+  function clipcopy() {
+    local content_tocopy
+    content_tocopy=$(cat "${1:-/dev/stdin}" | base64 | tr -d '\n')
+    printf "\033]52;c;%s\a" "$content_tocopy" > /dev/tty
+  }
+fi
 
-unfunction _ensure_completion
-
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+# Machine-local overrides (internal/personal stuff; gitignored)
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
